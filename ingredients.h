@@ -14,36 +14,22 @@ public:
 		KETCHUP,
 
 	};
-	ingredientsType type;
+	
 	
 	std::string ingredientsOrder;
     ingredients();
     ~ingredients();
 
-    ingredients(ingredientsType t) : type(t) {
-        switch (type) {
-        case ingredientsType::BUN:
-            ingredientsOrder = "bun";
-            break;
-        case ingredientsType::BURGER:
-            ingredientsOrder = "burger";
-            break;
-        case ingredientsType::LETTUCE:
-            ingredientsOrder = "lettuce";
-            break;
-        case ingredientsType::TOMATO:
-            ingredientsOrder = "tomato";
-            break;
-        case ingredientsType::CHEESE:
-            ingredientsOrder = "cheese";
-            break;
-        case ingredientsType::KETCHUP:
-            ingredientsOrder = "ketchup";
-            break;
-        default:
-          
-            break;
-        }
-    }
+	inline std::string toString(ingredientsType type) {
+		switch (type) {
+		case BUN: return "bun";
+		case BURGER: return "burger";
+		case LETTUCE: return "lettuce";
+		case TOMATO: return "tomato";
+		case CHEESE: return "cheese";
+		case KETCHUP: return "ketchup";
+		default: return "unknown";
+		}
+	}
 
 };

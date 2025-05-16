@@ -9,5 +9,9 @@ class Player
 public:
 	std::vector<ingredients> playerOrder;
 
+	void PlaceOrder();
+
+
+
 };
 
