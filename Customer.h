@@ -6,8 +6,8 @@
 class Customer
 {
 public:
-	std::queue<Customer> LineUp;
-	std::vector<ingredients> customerOrder;
+	std::queue<int> LineUp;
+	std::vector<ingredients::ingredientsType> customerOrder;
 
 };
 

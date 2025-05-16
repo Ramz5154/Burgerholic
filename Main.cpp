@@ -8,9 +8,12 @@ int main() {
 	Customer customer;
 	ingredients ingredientsMenu;
 
-	customer.customerOrder.push_back(ingredientsMenu.BUN);
+	customer.customerOrder.push_back(ingredients::BUN);
+	customer.customerOrder.push_back(ingredients::BUN);
+
+	std::cout << customer.customerOrder.size();
+
+
+	return 0;
 	
-	for (int i = 0; i < customer.customerOrder.size(); ++i) {
-		std::cout << customer.customerOrder[i];
-	}
 }
