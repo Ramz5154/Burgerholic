@@ -17,7 +17,8 @@ public:
 	ingredientsType type;
 	
 	std::string ingredientsOrder;
-	std::vector<std::string > order;
+    ingredients();
+    ~ingredients();
 
     ingredients(ingredientsType t) : type(t) {
         switch (type) {
@@ -44,9 +45,5 @@ public:
             break;
         }
     }
-
-	
-	
-	
 
 };
