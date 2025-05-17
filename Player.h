@@ -1,7 +1,7 @@
 #pragma once
 #include "ingredients.h"
 #include <vector>
-
+#include <SDL2/SDL.h>
 
 
 class Player
@@ -9,9 +9,7 @@ class Player
 public:
 	std::vector<ingredients> playerOrder;
 
-	void PlaceOrder();
-
-
+	bool PlaceOrder();
 
 };
 
