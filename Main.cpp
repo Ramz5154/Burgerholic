@@ -15,10 +15,16 @@ int SCREEN_WIDTH = 1080;
 int	SCREEN_HEIGHT = 720;
 
 int main(int argc, char* args[]) {
-	
+
+
+
+	SDL_Event event;
+	ingredients ing;
+	Player player;
+	Customer* customer;
+	customer = new Customer();
 	{
 		/*
-		Customer customer;
 		ingredients ingredientsMenu;
 		Player player;
 
@@ -43,9 +49,6 @@ int main(int argc, char* args[]) {
 		}
 
 		
-		SDL_Event event;
-		
-		Player player;
 		
 
 		while (window.gameRunning) {
@@ -65,8 +68,10 @@ int main(int argc, char* args[]) {
 
 
 		}
-
-
+		for (int i = 0; i < player.playerOrder.size(); ++i) {
+			std::cout << player.playerOrder[i];
+		}
+		std::cout << player.playerOrder.size();
 
 	window.close();
 
