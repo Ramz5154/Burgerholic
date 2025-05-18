@@ -9,7 +9,7 @@ class Player
 public:
 	std::vector<ingredients> playerOrder;
 
-	bool PlaceOrder();
+	bool PlaceOrder(SDL_Event& event);
 
 };
 

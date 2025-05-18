@@ -42,23 +42,33 @@ int main(int argc, char* args[]) {
 			printf("renderer could not be created", SDL_GetError());
 		}
 
-		bool gameRunning = true;
+		
 		SDL_Event event;
-		while (gameRunning) {
+		
+		Player player;
+		
+
+		while (window.gameRunning) {
 			while (SDL_PollEvent(&event) != 0) {
 				if (event.type == SDL_QUIT) {
-					gameRunning = false;
+					window.gameRunning = false;
 				}
-
+				player.PlaceOrder(event);
 			}
 			SDL_SetRenderDrawColor(renderer, 169, 169, 169, 1);
+			
 
 			SDL_RenderClear(renderer);
 
 			SDL_RenderPresent(renderer);
+			
+
+
 		}
 
-		window.close();
+
+
+	window.close();
 
 	return 0;
 	
