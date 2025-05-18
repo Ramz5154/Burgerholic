@@ -2,16 +2,18 @@
 #include <string>
 #include <vector>
 class ingredients {
+
 public:
 	enum ingredientsType
 	{
 		
 		BUN,
-		BURGER,
+		RAWBURGER,
 		LETTUCE,
 		TOMATO,
 		CHEESE,
 		KETCHUP,
+		COOKEDBURGER
 
 	};
 	
@@ -23,7 +25,7 @@ public:
 	inline std::string toString(ingredientsType type) {
 		switch (type) {
 		case BUN: return "bun";
-		case BURGER: return "burger";
+		case RAWBURGER: return "raw burger";
 		case LETTUCE: return "lettuce";
 		case TOMATO: return "tomato";
 		case CHEESE: return "cheese";

@@ -16,7 +16,7 @@ int	SCREEN_HEIGHT = 720;
 
 int main(int argc, char* args[]) {
 
-
+	srand(time(0));
 
 	SDL_Event event;
 	ingredients ing;
@@ -49,6 +49,7 @@ int main(int argc, char* args[]) {
 		}
 
 		
+			customer->makeRandomOrder();//makes the customers order randomly
 		
 
 		while (window.gameRunning) {
@@ -56,8 +57,11 @@ int main(int argc, char* args[]) {
 				if (event.type == SDL_QUIT) {
 					window.gameRunning = false;
 				}
-				player.PlaceOrder(event);
+				player.PlaceOrder(event);//handle events to make the order
+				
+				
 			}
+
 			SDL_SetRenderDrawColor(renderer, 169, 169, 169, 1);
 			
 
@@ -68,10 +72,20 @@ int main(int argc, char* args[]) {
 
 
 		}
-		for (int i = 0; i < player.playerOrder.size(); ++i) {
-			std::cout << player.playerOrder[i];
+
+		for (int i = 0; i < player.playerOrder.size(); ++i) { //prints the indexes for the players's order
+			//std::cout << ' ' << player.playerOrder[i];
 		}
-		std::cout << player.playerOrder.size();
+		for (int i = 0; i < customer->customerOrder.size(); ++i) { //prints the indexes for the customer's order
+			std::cout << ' ' << customer->customerOrder[i];
+		}
+
+
+		//std::cout << ' ' << player.playerOrder.size();
+		std::cout << "customers size" << customer->customerOrder.size() << "done";
+
+
+
 
 	window.close();
 
