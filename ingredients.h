@@ -22,6 +22,11 @@ public:
     ingredients();
     ~ingredients();
 
+	static bool ingredientsMatch(std::vector<ingredients::ingredientsType> customer, std::vector<ingredients::ingredientsType> player);
+
+	
+
+
 	inline std::string toString(ingredientsType type) {
 		switch (type) {
 		case BUN: return "bun";

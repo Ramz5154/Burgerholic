@@ -21,8 +21,11 @@ int main(int argc, char* args[]) {
 	SDL_Event event;
 	ingredients ing;
 	Player player;
+	
 	Customer* customer;
 	customer = new Customer();
+	customer->LineUp.push(customer->customerOrder);
+
 	{
 		/*
 		ingredients ingredientsMenu;
@@ -49,8 +52,11 @@ int main(int argc, char* args[]) {
 		}
 
 		
-			customer->makeRandomOrder();//makes the customers order randomly
+		customer->makeRandomOrder();//makes the customers order randomly
 		
+		for (int i = 0; i < customer->customerOrder.size(); ++i) { //prints the indexes for the customer's order
+			std::cout << ' ' << customer->customerOrder[i];
+		}
 
 		while (window.gameRunning) {
 			while (SDL_PollEvent(&event) != 0) {
@@ -58,7 +64,6 @@ int main(int argc, char* args[]) {
 					window.gameRunning = false;
 				}
 				player.PlaceOrder(event);//handle events to make the order
-				
 				
 			}
 
@@ -73,12 +78,14 @@ int main(int argc, char* args[]) {
 
 		}
 
+		ing.ingredientsMatch(customer->customerOrder, player.playerOrder);
+
 		for (int i = 0; i < player.playerOrder.size(); ++i) { //prints the indexes for the players's order
 			//std::cout << ' ' << player.playerOrder[i];
 		}
-		for (int i = 0; i < customer->customerOrder.size(); ++i) { //prints the indexes for the customer's order
-			std::cout << ' ' << customer->customerOrder[i];
-		}
+	
+		
+		
 
 
 		//std::cout << ' ' << player.playerOrder.size();

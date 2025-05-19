@@ -12,7 +12,7 @@ public:
 	~Customer();
 	int enumSize = 6;
 	int random_index;
-	std::queue<int> LineUp;
+	std::queue<std::vector<ingredients::ingredientsType>> LineUp;
 	std::vector<ingredients::ingredientsType> customerOrder;
 
 
