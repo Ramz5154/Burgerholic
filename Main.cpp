@@ -63,8 +63,28 @@ int main(int argc, char* args[]) {
 				if (event.type == SDL_QUIT) {
 					window.gameRunning = false;
 				}
-				player.PlaceOrder(event);//handle events to make the order
+				if (player.quit) {
+					window.gameRunning = false;
+			}
 				
+				player.PlaceOrder(event);//handle events to make the order
+
+				if (player.enter) {
+					if (ing.ingredientsMatch(customer->customerOrder, player.playerOrder)) {
+						std::cout << "orders match";
+					}
+					else {
+						std::cout << "orders dont match";
+					}
+
+
+					while (!player.playerOrder.empty()) {//after you press enter the vector is cleared 
+							player.playerOrder.pop_back();
+					}
+
+					player.enter = false;
+
+				}
 			}
 
 			SDL_SetRenderDrawColor(renderer, 169, 169, 169, 1);
@@ -74,22 +94,14 @@ int main(int argc, char* args[]) {
 
 			SDL_RenderPresent(renderer);
 			
-
-
 		}
 
-		ing.ingredientsMatch(customer->customerOrder, player.playerOrder);
-
-		for (int i = 0; i < player.playerOrder.size(); ++i) { //prints the indexes for the players's order
-			//std::cout << ' ' << player.playerOrder[i];
-		}
+		
+		
 	
-		
-		
 
 
-		//std::cout << ' ' << player.playerOrder.size();
-		std::cout << "customers size" << customer->customerOrder.size() << "done";
+	
 
 
 

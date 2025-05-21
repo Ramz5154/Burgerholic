@@ -7,6 +7,8 @@
 class Player
 {
 public:
+	bool quit;
+	bool enter;
 	std::vector<ingredients::ingredientsType> playerOrder;
 
 	bool PlaceOrder(SDL_Event& event);

@@ -13,19 +13,16 @@ ingredients::~ingredients()
 
  bool ingredients::ingredientsMatch(std::vector<ingredients::ingredientsType>  customer, std::vector<ingredients::ingredientsType>  player)
 {
-	
+	 if (player.size() == customer.size()) {
+		
+			 if (player == customer) {
+				 return true;
+			 }
 
-	for (int i = 0; i < customer.size(); ++i) {
-		if (player[i] == customer[i]) {
-			std::cout << "orders match" << '\n';
-			
-		}
-		else {
-			std::cout << "orders dont match " << '\n';
-			
-		}
-
-	}
-	return true;
+			 else {
+				 return false;
+			 }
+	 }
+	return false;
 }
 

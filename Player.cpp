@@ -7,7 +7,7 @@
 
 bool Player::PlaceOrder(SDL_Event& event)
 {
-   
+    
     bool isRunning = true;
    
  
@@ -38,8 +38,11 @@ bool Player::PlaceOrder(SDL_Event& event)
             printf("CHEESE ");
             break;
       case SDLK_ESCAPE:
-       isRunning = false;
+          quit = true;
        break;
+      case SDLK_RETURN:
+          enter = true;
+          break;
       default:
           printf("you pressed an invalid key");
         }
