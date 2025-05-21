@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Customer.cpp" />
+    <ClCompile Include="ImageRenderer.cpp" />
     <ClCompile Include="ingredients.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -135,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Customer.h" />
+    <ClInclude Include="ImageRenderer.h" />
     <ClInclude Include="ingredients.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="window.h" />

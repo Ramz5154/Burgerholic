@@ -10,6 +10,7 @@
 #include <string>
 #include "Player.h"
 #include "window.h"
+#include "ImageRenderer.h"
 
 int SCREEN_WIDTH = 1080;	
 int	SCREEN_HEIGHT = 720;
@@ -51,13 +52,18 @@ int main(int argc, char* args[]) {
 			printf("renderer could not be created", SDL_GetError());
 		}
 
+		if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
+			std::cerr << "SDL_image could not initialize! Error: " << IMG_GetError() << std::endl;
+			return -1;
+		}
+
+		ImageRenderer burger(renderer, "assets/loading.png");
 		
 		customer->makeRandomOrder();//makes the customers order randomly
 		
 		for (int i = 0; i < customer->customerOrder.size(); ++i) { //prints the indexes for the customer's order
 			std::cout << ' ' << customer->customerOrder[i];
 		}
-
 		while (window.gameRunning) {
 			while (SDL_PollEvent(&event) != 0) {
 				if (event.type == SDL_QUIT) {
@@ -67,7 +73,9 @@ int main(int argc, char* args[]) {
 					window.gameRunning = false;
 			}
 				
+
 				player.PlaceOrder(event);//handle events to make the order
+				
 
 				if (player.enter) {
 					if (ing.ingredientsMatch(customer->customerOrder, player.playerOrder)) {
@@ -87,26 +95,20 @@ int main(int argc, char* args[]) {
 				}
 			}
 
-			SDL_SetRenderDrawColor(renderer, 169, 169, 169, 1);
-			
+			SDL_SetRenderDrawColor(renderer, 169, 169, 169, 255);
 
 			SDL_RenderClear(renderer);
+
+			burger.Render(100, 100, 100, 100);
 
 			SDL_RenderPresent(renderer);
 			
 		}
 
 		
-		
-	
-
-
-	
-
-
-
 
 	window.close();
+	IMG_Quit();
 
 	return 0;
 	
