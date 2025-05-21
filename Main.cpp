@@ -57,7 +57,7 @@ int main(int argc, char* args[]) {
 			return -1;
 		}
 
-		ImageRenderer burger(renderer, "assets/loading.png");
+		ImageRenderer burger(renderer, "assets/burgerStoreCounter.png");
 		
 		customer->makeRandomOrder();//makes the customers order randomly
 		
@@ -99,7 +99,7 @@ int main(int argc, char* args[]) {
 
 			SDL_RenderClear(renderer);
 
-			burger.Render(100, 100, 100, 100);
+			burger.Render(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 			SDL_RenderPresent(renderer);
 			
