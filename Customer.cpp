@@ -7,6 +7,10 @@ Customer::Customer()
    
 }
 
+Customer::~Customer()
+{
+}
+
 std::vector<ingredients::ingredientsType> Customer::getCustomersOrder() const
 {
     return customerOrder;

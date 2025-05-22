@@ -3,113 +3,56 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-
 #include <iostream>
-#include "ingredients.h"
-#include "Customer.h"
-#include <string>
-#include "Player.h"
 #include "window.h"
-#include "ImageRenderer.h"
+#include "Scene1.h"
 
-int SCREEN_WIDTH = 1080;	
-int	SCREEN_HEIGHT = 720;
+int SCREEN_WIDTH = 1080;
+int SCREEN_HEIGHT = 720;
 
 int main(int argc, char* args[]) {
+    srand(time(0)); //make it random everytime
 
-	srand(time(0));
+    if (SDL_Init(SDL_INIT_VIDEO) > 0) {
+        std::cerr << "SDL could not initialize: " << SDL_GetError() << std::endl;
+        return -1;
+    }
 
-	SDL_Event event;
-	ingredients ing;
-	Player player;
-	
-	Customer* customer;
-	customer = new Customer();
-	customer->LineUp.push(customer->customerOrder);
+    if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
+        std::cerr << "SDL_image could not initialize! Error: " << IMG_GetError() << std::endl;
+        return -1;
+    }
 
-	{
-		/*
-		ingredients ingredientsMenu;
-		Player player;
+    Window window("Burgerholic", SCREEN_WIDTH, SCREEN_HEIGHT);
+    SDL_Renderer* renderer = window.SDL_GetRenderer();
 
-		customer.customerOrder.push_back(ingredients::BUN);
-		customer.customerOrder.push_back(ingredients::BUN);
+    if (!renderer) {
+        std::cerr << "Renderer could not be created: " << SDL_GetError() << std::endl;
+        return -1;
+    }
 
-		std::cout << customer.customerOrder[0];
-		std::cout << ingredientsMenu.toString( ingredients::CHEESE) ;
-		std::cout << ingredientsMenu.toString(customer.customerOrder[0]) << ' ';*/
-	}
-	
-	
-	if (SDL_Init(SDL_INIT_VIDEO) > 0) {
-		printf("sdl could not intialize", SDL_GetError());
-	}
+    // Create and run the main game scene
+    Scene1 scene(renderer);
 
-	Window window("SDL Window", SCREEN_WIDTH, SCREEN_HEIGHT);
-	SDL_Renderer* renderer = window.SDL_GetRenderer();
+    SDL_Event event;
+    while (window.gameRunning) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                window.gameRunning = false;
+            }
+            scene.HandleEvents(event);
+        }
 
-		if (renderer == nullptr) {
-			printf("renderer could not be created", SDL_GetError());
-		}
+        SDL_SetRenderDrawColor(renderer, 169, 169, 169, 255);
+        SDL_RenderClear(renderer);
 
-		if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
-			std::cerr << "SDL_image could not initialize! Error: " << IMG_GetError() << std::endl;
-			return -1;
-		}
+        scene.Update();
+        scene.Render(renderer);
 
-		ImageRenderer burger(renderer, "assets/burgerStoreCounter.png");
-		
-		customer->makeRandomOrder();//makes the customers order randomly
-		
-		for (int i = 0; i < customer->customerOrder.size(); ++i) { //prints the indexes for the customer's order
-			std::cout << ' ' << customer->customerOrder[i];
-		}
-		while (window.gameRunning) {
-			while (SDL_PollEvent(&event) != 0) {
-				if (event.type == SDL_QUIT) {
-					window.gameRunning = false;
-				}
-				if (player.quit) {
-					window.gameRunning = false;
-			}
-				
+        SDL_RenderPresent(renderer);
+    }
 
-				player.PlaceOrder(event);//handle events to make the order
-				
-
-				if (player.enter) {
-					if (ing.ingredientsMatch(customer->customerOrder, player.playerOrder)) {
-						std::cout << "orders match";
-					}
-					else {
-						std::cout << "orders dont match";
-					}
-
-
-					while (!player.playerOrder.empty()) {//after you press enter the vector is cleared 
-							player.playerOrder.pop_back();
-					}
-
-					player.enter = false;
-
-				}
-			}
-
-			SDL_SetRenderDrawColor(renderer, 169, 169, 169, 255);
-
-			SDL_RenderClear(renderer);
-
-			burger.Render(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-			SDL_RenderPresent(renderer);
-			
-		}
-
-		
-
-	window.close();
-	IMG_Quit();
-
-	return 0;
-	
+    window.close();
+    IMG_Quit();
+    return 0;
 }
