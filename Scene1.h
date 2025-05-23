@@ -14,9 +14,17 @@ public:
     void HandleEvents(SDL_Event& event) override;
     void Update() override;
     void Render(SDL_Renderer* renderer) override;
-
+    void VectorToImage();
 private:
-    ImageRenderer* burgerImage;
+    ImageRenderer* burgerShop;
+    ImageRenderer* topBun;
+    ImageRenderer* lettuce;
+    ImageRenderer* tomato;
+    ImageRenderer* cheese;
+    ImageRenderer* ketchup;
+    ImageRenderer* cookedBurger;
+    ImageRenderer* rawBurger;
+    ImageRenderer* bottomBun;
     Customer* customer;
     Player player;
     ingredients ing;
