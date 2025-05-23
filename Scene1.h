@@ -17,7 +17,9 @@ public:
     void VectorToImage();
 private:
     bool reset = true;
-  
+    int customerpos1 = 0;
+    int customerpos1 = 300;
+    int customerpos1 = 600;
     ImageRenderer* burgerShop;
     ImageRenderer* topBun;
     ImageRenderer* lettuce;
@@ -27,6 +29,8 @@ private:
     ImageRenderer* cookedBurger;
     ImageRenderer* rawBurger;
     ImageRenderer* bottomBun;
+    ImageRenderer* customerHappy;
+    ImageRenderer* customerAngry;
     Customer* customer;
     Player player;
     ingredients ing;

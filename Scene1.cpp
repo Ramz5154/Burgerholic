@@ -11,6 +11,8 @@ Scene1::Scene1(SDL_Renderer* renderer) {
     bottomBun = new ImageRenderer(renderer, "assets/bottomBun.png");
     cookedBurger = new ImageRenderer(renderer, "assets/cookedBurger.png");
     rawBurger = new ImageRenderer(renderer, "assets/rawBurger.png");
+    customerHappy = new ImageRenderer(renderer, "assets/customerHappy.png");
+    customerAngry = new ImageRenderer(renderer, "assets/customerAngry.png");
     customer = new Customer();
     customer->makeRandomOrder();
     for (int i = 0; i < customer->customerOrder.size(); ++i) { //prints the indexes for the customer's order
@@ -49,8 +51,11 @@ void Scene1::Update() {
 
 void Scene1::Render(SDL_Renderer* renderer) {
     burgerShop->Render(0, 0, 1080, 720);
+    customerHappy->Render(0, 160, 400, 400);
+    customerHappy->Render(600, 160, 400, 400);
+    customerAngry->Render(300, 160, 400, 400);
 
-    if (player.playerOrder.size() > 0) {
+    if (player.playerOrder.size() > 0 || customer->customerOrder.size() > 0) {
         VectorToImage();
     }
 }
@@ -106,7 +111,50 @@ void Scene1::VectorToImage()
                 }
             }
             
-          
-        
     }
+
+
+    for (int i = 0; i < customer->customerOrder.size(); ++i) {
+        int yPos = currentY - (i * 20);
+        // Special handling for bun at the first index
+        if (customer->customerOrder[i] == ingredients::ingredientsType::BUN) {
+            if (i == 0) {
+                bottomBun->Render(0, yPos, 500, 500);
+
+            }
+            else {
+                topBun->Render(0, yPos, 500, 500);
+
+            }
+        }
+        else {
+
+            switch (customer->customerOrder[i]) {
+            case ingredients::ingredientsType::TOMATO:
+
+                tomato->Render(0, yPos, 500, 500);
+
+                break;
+            case ingredients::ingredientsType::LETTUCE:
+                lettuce->Render(0, yPos, 500, 500);
+
+                break;
+            case ingredients::ingredientsType::CHEESE:
+                cheese->Render(0, yPos, 500, 500);
+
+                break;
+            case ingredients::ingredientsType::KETCHUP:
+                ketchup->Render(0, yPos, 500, 500);
+
+                break;
+            case ingredients::ingredientsType::COOKEDBURGER:
+                cookedBurger->Render(0, yPos, 500, 500);
+
+                break;
+            }
+        }
+    }
+
+
+
 }
