@@ -6,7 +6,10 @@
 
 class Player
 {
+	
+
 public:
+	int firstIng = 400;
 	bool quit;
 	bool enter;
 	std::vector<ingredients::ingredientsType> playerOrder;

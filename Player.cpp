@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Customer.h"
 #include "ingredients.h"
-
+#include "Scene1.h"
 
 bool Player::PlaceOrder(SDL_Event& event)
 {
@@ -20,6 +20,7 @@ bool Player::PlaceOrder(SDL_Event& event)
         case SDLK_b:
             playerOrder.push_back(ingredients::ingredientsType::RAWBURGER);
             printf("RAW BURGER ");
+           
             break;
         case SDLK_l:
             playerOrder.push_back(ingredients::ingredientsType::LETTUCE);

@@ -40,6 +40,7 @@ void Scene1::HandleEvents(SDL_Event& event) {
         player.playerOrder.clear();
         player.enter = false;
     }
+
 }
 
 void Scene1::Update() {
@@ -48,6 +49,7 @@ void Scene1::Update() {
 
 void Scene1::Render(SDL_Renderer* renderer) {
     burgerShop->Render(0, 0, 1080, 720);
+
     if (player.playerOrder.size() > 0) {
         VectorToImage();
     }
@@ -55,38 +57,56 @@ void Scene1::Render(SDL_Renderer* renderer) {
 
 void Scene1::VectorToImage()
 {
+    int currentY = player.firstIng;
+
+   
+
     for (int i = 0; i < player.playerOrder.size(); ++i) {
-        // Special handling for bun at the first index
-        if (player.playerOrder[i] == ingredients::ingredientsType::BUN) {
-            if (i == 0) {
-                bottomBun->Render(0, 200, 1080, 720);
+
+        int yPos = currentY - (i * 25);
+            // Special handling for bun at the first index
+            if (player.playerOrder[i] == ingredients::ingredientsType::BUN) {
+                if (i == 0) {
+                    bottomBun->Render(0, yPos, 1080, 720);
+                   
+                }
+                else {
+                    topBun->Render(0, yPos, 1080, 720);
+                    
+                }
             }
             else {
-                topBun->Render(0, 200, 1080, 720);
+
+                switch (player.playerOrder[i]) {
+                case ingredients::ingredientsType::TOMATO:
+                    
+                    tomato->Render(0, yPos, 1080, 720);
+                 
+                    break;
+                case ingredients::ingredientsType::LETTUCE:
+                    lettuce->Render(0, yPos, 1080, 720);
+                   
+                    break;
+                case ingredients::ingredientsType::CHEESE:
+                    cheese->Render(0, yPos, 1080, 720);
+                   
+                    break;
+                case ingredients::ingredientsType::KETCHUP:
+                    ketchup->Render(0, yPos, 1080, 720);
+                   
+                    break;
+                case ingredients::ingredientsType::RAWBURGER:
+                    rawBurger->Render(0, yPos, 1080, 720);
+                   
+                    break;
+                case ingredients::ingredientsType::COOKEDBURGER:
+                    cookedBurger->Render(0, yPos, 1080, 720);
+                  
+                    break;
+                }
             }
-        }
-        else {
-           
-            switch (player.playerOrder[i]) {
-            case ingredients::ingredientsType::TOMATO:
-                tomato->Render(0, 0, 1080, 720);
-                break;
-            case ingredients::ingredientsType::LETTUCE:
-                lettuce->Render(0, 0, 1080, 720);
-                break;
-            case ingredients::ingredientsType::CHEESE:
-                cheese->Render(0, 0, 1080, 720);
-                break;
-            case ingredients::ingredientsType::KETCHUP:
-                ketchup->Render(0, 0, 1080, 720);
-                break;
-            case ingredients::ingredientsType::RAWBURGER:
-                rawBurger->Render(0, 0, 1080, 720);
-                break;
-            case ingredients::ingredientsType::COOKEDBURGER:
-                cookedBurger->Render(0, 0, 1080, 720);
-                break;
-            }
-        }
+            
+          
+        
     }
 }
