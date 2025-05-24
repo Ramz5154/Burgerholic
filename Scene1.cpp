@@ -51,9 +51,7 @@ void Scene1::Update() {
 
 void Scene1::Render(SDL_Renderer* renderer) {
     burgerShop->Render(0, 0, 1080, 720);
-    customerHappy->Render(0, 160, 400, 400);
-    customerHappy->Render(600, 160, 400, 400);
-    customerAngry->Render(300, 160, 400, 400);
+    
 
     if (player.playerOrder.size() > 0 || customer->customerOrder.size() > 0) {
         VectorToImage();
@@ -155,6 +153,13 @@ void Scene1::VectorToImage()
         }
     }
 
+
+
+}
+
+void Scene1::lineUp()
+{
+    customer->LineUp.push(customer->customerOrder);
 
 
 }

@@ -11,6 +11,9 @@ public:
 	Customer();
 	~Customer();
 	int enumSize = 6;
+	int firstBurger = -100;
+	int secondBurger = 100;
+	int thirdBurger = 300;
 	int random_index;
 	std::queue<std::vector<ingredients::ingredientsType>> LineUp;
 	std::vector<ingredients::ingredientsType> customerOrder;

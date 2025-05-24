@@ -15,11 +15,12 @@ public:
     void Update() override;
     void Render(SDL_Renderer* renderer) override;
     void VectorToImage();
+    void lineUp();
 private:
     bool reset = true;
     int customerpos1 = 0;
-    int customerpos1 = 300;
-    int customerpos1 = 600;
+    int customerpos2 = 300;
+    int customerpos3 = 600;
     ImageRenderer* burgerShop;
     ImageRenderer* topBun;
     ImageRenderer* lettuce;
