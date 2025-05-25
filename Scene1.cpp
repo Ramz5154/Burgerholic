@@ -26,29 +26,28 @@ Scene1::~Scene1() {
 void Scene1::HandleEvents(SDL_Event& event) {
     player.PlaceOrder(event);
     if (event.type == SDL_QUIT || player.quit) {
-       
+
     }
 
     if (player.enter) {
-        for (int i = 0; i < customer->LineUp[i].size(); ++i) {
+        bool matched = false;
+
+        for (int i = 0; i < customer->LineUp.size(); ++i) {
             if (ing.ingredientsMatch(customer->LineUp[i], player.playerOrder)) {
                 std::cout << "orders match\n";
                 customer->LineUp[i].clear();
-                i = 0;
+                matched = true;
                 break;
             }
-
-            else {
-                std::cout << "orders don't match\n";
-               
-            }
-           
         }
-        
+
+        if (!matched) {
+            std::cout << "orders don't match\n";
+        }
+
         player.playerOrder.clear();
         player.enter = false;
     }
-
 }
 
 void Scene1::Update() {
