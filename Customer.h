@@ -4,7 +4,7 @@
 #include <queue>
 #include <string>
 #include "SDL2/SDL.h"
-
+#include "ImageRenderer.h"
 class Customer
 {
 public:
@@ -17,6 +17,7 @@ public:
 	int random_index;
 	//std::queue<std::vector<ingredients::ingredientsType>> LineUp;
 	std::vector<std::vector<ingredients::ingredientsType>> LineUp;
+	std::vector<ImageRenderer> customerLineUp;
 	std::vector<ingredients::ingredientsType> customerOrder;
 
 

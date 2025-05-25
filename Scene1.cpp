@@ -55,8 +55,12 @@ void Scene1::Update() {
 }
 
 void Scene1::Render(SDL_Renderer* renderer) {
+    int x = 0;
     burgerShop->Render(0, 0, 1080, 720);
-    
+    for (int i = 0; i < customer->LineUp.size(); ++i) {
+        int xPos = x + (i * 310);
+        customerHappy->Render(xPos, 160, 400, 400);
+    }
 
     if (player.playerOrder.size() > 0 || customer->customerOrder.size() > 0) {
         VectorToImage();
@@ -116,22 +120,22 @@ void Scene1::VectorToImage()
             }
             
     }
-    int currentx = 0;
+    int currentx = 110;
    
 
     for (int i = 0; i < customer->LineUp.size(); ++i) {
-        int xpos = currentx + (i * 200);
+        int xpos = currentx + (i * 320);
         for (int y = 0; y < customer->LineUp[i].size(); ++y)
         {
-            int yPos = currentY - (y * 20);
+            int yPos = 220 - (y * 13);
             // Special handling for bun at the first index
             if (customer->LineUp[i][y] == ingredients::ingredientsType::BUN) {
                 if (y == 0) {
-                    bottomBun->Render(xpos, yPos, 500, 500);
+                    bottomBun->Render(xpos, yPos, 300, 300);
 
                 }
                 else {
-                    topBun->Render(xpos, yPos, 500, 500);
+                    topBun->Render(xpos, yPos, 300, 300);
 
                 }
             }
@@ -140,23 +144,23 @@ void Scene1::VectorToImage()
                 switch (customer->LineUp[i][y]) {
                 case ingredients::ingredientsType::TOMATO:
 
-                    tomato->Render(xpos, yPos, 500, 500);
+                    tomato->Render(xpos, yPos, 300, 300);
 
                     break;
                 case ingredients::ingredientsType::LETTUCE:
-                    lettuce->Render(xpos, yPos, 500, 500);
+                    lettuce->Render(xpos, yPos, 300, 300);
 
                     break;
                 case ingredients::ingredientsType::CHEESE:
-                    cheese->Render(xpos, yPos, 500, 500);
+                    cheese->Render(xpos, yPos, 300, 300);
 
                     break;
                 case ingredients::ingredientsType::KETCHUP:
-                    ketchup->Render(xpos, yPos, 500, 500);
+                    ketchup->Render(xpos, yPos, 300, 300);
 
                     break;
                 case ingredients::ingredientsType::COOKEDBURGER:
-                    cookedBurger->Render(xpos, yPos, 500, 500);
+                    cookedBurger->Render(xpos, yPos, 300, 300);
 
                     break;
                 }
@@ -170,7 +174,9 @@ void Scene1::VectorToImage()
 
 void Scene1::lineUp()
 {
+    
     for (int i = 0; i < 3; ++i) { // or however many customers
+      
         customer->makeRandomOrder();
         customer->LineUp.push_back(customer->customerOrder);
         for (int i = 0; i < customer->customerOrder.size(); ++i) { //prints the indexes for the customer's order
