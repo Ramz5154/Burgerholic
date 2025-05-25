@@ -14,10 +14,8 @@ Scene1::Scene1(SDL_Renderer* renderer) {
     customerHappy = new ImageRenderer(renderer, "assets/customerHappy.png");
     customerAngry = new ImageRenderer(renderer, "assets/customerAngry.png");
     customer = new Customer();
-    customer->makeRandomOrder();
-    for (int i = 0; i < customer->customerOrder.size(); ++i) { //prints the indexes for the customer's order
-        std::cout << ' ' << customer->customerOrder[i];
-    }
+    lineUp();
+   
 }
 
 Scene1::~Scene1() {
@@ -32,13 +30,21 @@ void Scene1::HandleEvents(SDL_Event& event) {
     }
 
     if (player.enter) {
-        if (ing.ingredientsMatch(customer->customerOrder, player.playerOrder)) {
-            std::cout << "orders match\n";
-        }
-        else {
-            std::cout << "orders don't match\n";
-        }
+        for (int i = 0; i < customer->LineUp[i].size(); ++i) {
+            if (ing.ingredientsMatch(customer->LineUp[i], player.playerOrder)) {
+                std::cout << "orders match\n";
+                customer->LineUp[i].clear();
+                i = 0;
+                break;
+            }
 
+            else {
+                std::cout << "orders don't match\n";
+               
+            }
+           
+        }
+        
         player.playerOrder.clear();
         player.enter = false;
     }
@@ -61,6 +67,7 @@ void Scene1::Render(SDL_Renderer* renderer) {
 void Scene1::VectorToImage()
 {
     int currentY = player.firstIng;
+    
 
    
 
@@ -110,45 +117,50 @@ void Scene1::VectorToImage()
             }
             
     }
+    int currentx = 0;
+   
 
+    for (int i = 0; i < customer->LineUp.size(); ++i) {
+        int xpos = currentx + (i * 200);
+        for (int y = 0; y < customer->LineUp[i].size(); ++y)
+        {
+            int yPos = currentY - (y * 20);
+            // Special handling for bun at the first index
+            if (customer->LineUp[i][y] == ingredients::ingredientsType::BUN) {
+                if (y == 0) {
+                    bottomBun->Render(xpos, yPos, 500, 500);
 
-    for (int i = 0; i < customer->customerOrder.size(); ++i) {
-        int yPos = currentY - (i * 20);
-        // Special handling for bun at the first index
-        if (customer->customerOrder[i] == ingredients::ingredientsType::BUN) {
-            if (i == 0) {
-                bottomBun->Render(0, yPos, 500, 500);
+                }
+                else {
+                    topBun->Render(xpos, yPos, 500, 500);
 
+                }
             }
             else {
-                topBun->Render(0, yPos, 500, 500);
 
-            }
-        }
-        else {
+                switch (customer->LineUp[i][y]) {
+                case ingredients::ingredientsType::TOMATO:
 
-            switch (customer->customerOrder[i]) {
-            case ingredients::ingredientsType::TOMATO:
+                    tomato->Render(xpos, yPos, 500, 500);
 
-                tomato->Render(0, yPos, 500, 500);
+                    break;
+                case ingredients::ingredientsType::LETTUCE:
+                    lettuce->Render(xpos, yPos, 500, 500);
 
-                break;
-            case ingredients::ingredientsType::LETTUCE:
-                lettuce->Render(0, yPos, 500, 500);
+                    break;
+                case ingredients::ingredientsType::CHEESE:
+                    cheese->Render(xpos, yPos, 500, 500);
 
-                break;
-            case ingredients::ingredientsType::CHEESE:
-                cheese->Render(0, yPos, 500, 500);
+                    break;
+                case ingredients::ingredientsType::KETCHUP:
+                    ketchup->Render(xpos, yPos, 500, 500);
 
-                break;
-            case ingredients::ingredientsType::KETCHUP:
-                ketchup->Render(0, yPos, 500, 500);
+                    break;
+                case ingredients::ingredientsType::COOKEDBURGER:
+                    cookedBurger->Render(xpos, yPos, 500, 500);
 
-                break;
-            case ingredients::ingredientsType::COOKEDBURGER:
-                cookedBurger->Render(0, yPos, 500, 500);
-
-                break;
+                    break;
+                }
             }
         }
     }
@@ -159,7 +171,12 @@ void Scene1::VectorToImage()
 
 void Scene1::lineUp()
 {
-    customer->LineUp.push(customer->customerOrder);
-
-
+    for (int i = 0; i < 3; ++i) { // or however many customers
+        customer->makeRandomOrder();
+        customer->LineUp.push_back(customer->customerOrder);
+        for (int i = 0; i < customer->customerOrder.size(); ++i) { //prints the indexes for the customer's order
+            std::cout << ' ' << customer->customerOrder[i];
+        }
+        std::cout << '\n';
+    }
 }

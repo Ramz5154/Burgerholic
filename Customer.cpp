@@ -19,7 +19,7 @@ std::vector<ingredients::ingredientsType> Customer::getCustomersOrder() const
 void Customer::makeRandomOrder()
 {
   
-  
+    customerOrder.clear();
    
     customerOrder.push_back(ingredients::ingredientsType::BUN);
 
