@@ -15,7 +15,9 @@ public:
     void Update() override;
     void Render(SDL_Renderer* renderer) override;
     void VectorToImage();
+    void custumerLineUp();
     void lineUp();
+    int level = 3;
 private:
     bool reset = true;
     int customerpos1 = 0;

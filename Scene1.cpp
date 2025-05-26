@@ -14,6 +14,7 @@ Scene1::Scene1(SDL_Renderer* renderer) {
     customerHappy = new ImageRenderer(renderer, "assets/customerHappy.png");
     customerAngry = new ImageRenderer(renderer, "assets/customerAngry.png");
     customer = new Customer();
+    
     lineUp();
    
 }
@@ -35,11 +36,14 @@ void Scene1::HandleEvents(SDL_Event& event) {
         for (int i = 0; i < customer->LineUp.size(); ++i) {
             if (ing.ingredientsMatch(customer->LineUp[i], player.playerOrder)) {
                 std::cout << "orders match\n";
-                customer->LineUp[i].clear();
+                customer->LineUp.erase(customer->LineUp.begin() + i); 
+                customer->customerLineUp.erase(customer->customerLineUp.begin() + i); 
+
                 matched = true;
                 break;
             }
         }
+
 
         if (!matched) {
             std::cout << "orders don't match\n";
@@ -55,12 +59,14 @@ void Scene1::Update() {
 }
 
 void Scene1::Render(SDL_Renderer* renderer) {
-    int x = 0;
+   
     burgerShop->Render(0, 0, 1080, 720);
-    for (int i = 0; i < customer->LineUp.size(); ++i) {
-        int xPos = x + (i * 310);
-        customerHappy->Render(xPos, 160, 400, 400);
-    }
+   
+   
+        custumerLineUp();
+    
+
+
 
     if (player.playerOrder.size() > 0 || customer->customerOrder.size() > 0) {
         VectorToImage();
@@ -71,7 +77,7 @@ void Scene1::VectorToImage()
 {
     int currentY = player.firstIng;
     
-
+  
    
 
     for (int i = 0; i < player.playerOrder.size(); ++i) {
@@ -168,19 +174,31 @@ void Scene1::VectorToImage()
         }
     }
 
-
+   
+   
 
 }
 
+void Scene1::custumerLineUp()
+{
+    int x = 0;
+
+    for (int i = 0; i < customer->customerLineUp.size(); ++i) {
+        int xPos = x + (i * 310);
+        customer->customerLineUp[i]->Render(xPos, 160, 400, 400);
+    }
+}
+
+
 void Scene1::lineUp()
 {
-    
-    for (int i = 0; i < 3; ++i) { // or however many customers
-      
+    for (int i = 0; i < level; ++i) {
         customer->makeRandomOrder();
         customer->LineUp.push_back(customer->customerOrder);
-        for (int i = 0; i < customer->customerOrder.size(); ++i) { //prints the indexes for the customer's order
-            std::cout << ' ' << customer->customerOrder[i];
+        customer->customerLineUp.push_back(customerHappy);
+
+        for (int j = 0; j < customer->customerOrder.size(); ++j) {
+            std::cout << ' ' << customer->customerOrder[j];
         }
         std::cout << '\n';
     }
