@@ -6,12 +6,19 @@
 #include <iostream>
 #include "window.h"
 #include "Scene1.h"
+#include <SDL2/SDL_ttf.h>
 
 int SCREEN_WIDTH = 1080;
 int SCREEN_HEIGHT = 720;
 
 int main(int argc, char* args[]) {
     srand(time(0)); //make it random everytime
+
+    if (TTF_Init() == -1) {
+        std::cerr << "SDL_ttf could not initialize! Error: " << TTF_GetError() << std::endl;
+        return -1;
+    }
+
 
     if (SDL_Init(SDL_INIT_VIDEO) > 0) {
         std::cerr << "SDL could not initialize: " << SDL_GetError() << std::endl;

@@ -1,7 +1,14 @@
 #include "Scene1.h"
 #include <iostream>
+#include <SDL2/SDL_ttf.h>
 
 Scene1::Scene1(SDL_Renderer* renderer) {
+
+    font = TTF_OpenFont("assets/Pixelon.ttf", 100); //font size
+    if (!font) {
+        std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
+    }
+
     burgerShop = new ImageRenderer(renderer, "assets/burgerStoreCounter.png");
     topBun = new ImageRenderer(renderer, "assets/TopBun.png");
     lettuce = new ImageRenderer(renderer, "assets/lettuce.png");
@@ -22,6 +29,9 @@ Scene1::Scene1(SDL_Renderer* renderer) {
 Scene1::~Scene1() {
     delete burgerShop;
     delete customer;
+
+   
+
 }
 
 void Scene1::HandleEvents(SDL_Event& event) {
@@ -38,7 +48,7 @@ void Scene1::HandleEvents(SDL_Event& event) {
                 std::cout << "orders match\n";
                 customer->LineUp.erase(customer->LineUp.begin() + i); 
                 customer->customerLineUp.erase(customer->customerLineUp.begin() + i); 
-
+                ordersFinished += 1;
                 matched = true;
                 break;
             }
@@ -64,7 +74,8 @@ void Scene1::Render(SDL_Renderer* renderer) {
    
    
         custumerLineUp();
-    
+        std::string order = std::to_string(ordersFinished);
+     renderText(renderer, font, order, 250, 40);
 
 
 
@@ -202,4 +213,15 @@ void Scene1::lineUp()
         }
         std::cout << '\n';
     }
+}
+
+void Scene1::renderText(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y)
+{
+    SDL_Color color = { 255, 255, 255 };
+    SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_Rect dst = { x, y, surface->w, surface->h };
+    SDL_FreeSurface(surface);
+    SDL_RenderCopy(renderer, texture, NULL, &dst);
+    SDL_DestroyTexture(texture);
 }
