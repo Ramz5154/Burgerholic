@@ -18,7 +18,17 @@ bool Player::PlaceOrder(SDL_Event& event)
      playerOrder.push_back(ingredients::ingredientsType::BUN);
         break;
         case SDLK_b:
-            playerOrder.push_back(ingredients::ingredientsType::COOKEDBURGER);
+            if (!cooked) {
+                playerOrder.push_back(ingredients::ingredientsType::RAWBURGER);
+                
+                cooked = true;
+            }
+            if (cooked) {
+               
+                playerOrder.pop_back();
+                playerOrder.push_back(ingredients::ingredientsType::COOKEDBURGER);
+                cooked = false;
+            }
             printf("RAW BURGER ");
            
             break;

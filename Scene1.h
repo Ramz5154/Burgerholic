@@ -18,7 +18,7 @@ public:
     void custumerLineUp();
     void lineUp();
     void renderText(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y);
-    int level = 3;
+    int level = 1;
     int ordersFinished = 0;
 private:
     bool reset = true;

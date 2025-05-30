@@ -1,7 +1,7 @@
 #include "Scene1.h"
 #include <iostream>
 #include <SDL2/SDL_ttf.h>
-
+#include <ctime>
 Scene1::Scene1(SDL_Renderer* renderer) {
 
     font = TTF_OpenFont("assets/Pixelon.ttf", 100); //font size
@@ -59,13 +59,18 @@ void Scene1::HandleEvents(SDL_Event& event) {
             std::cout << "orders don't match\n";
         }
 
+        if (customer->LineUp.empty() && customer->customerLineUp.empty()) {
+            level += 1;
+            lineUp();
+        }
+
         player.playerOrder.clear();
         player.enter = false;
     }
 }
 
 void Scene1::Update() {
-   
+    
 }
 
 void Scene1::Render(SDL_Renderer* renderer) {
@@ -126,13 +131,15 @@ void Scene1::VectorToImage()
                    
                     break;
                 case ingredients::ingredientsType::RAWBURGER:
-                    rawBurger->Render(0, yPos, 1080, 720);
+                    rawBurger->Render(400, 400, 1080, 720);
                    
                     break;
                 case ingredients::ingredientsType::COOKEDBURGER:
                     cookedBurger->Render(0, yPos, 1080, 720);
                   
                     break;
+               
+
                 }
             }
             
@@ -146,46 +153,47 @@ void Scene1::VectorToImage()
         {
             int yPos = 220 - (y * 13);
             // Special handling for bun at the first index
-            if (customer->LineUp[i][y] == ingredients::ingredientsType::BUN) {
-                if (y == 0) {
-                    bottomBun->Render(xpos, yPos, 300, 300);
+           
+                if (customer->LineUp[i][y] == ingredients::ingredientsType::BUN) {
+                    if (y == 0) {
+                        bottomBun->Render(xpos, yPos, 300, 300);
 
+                    }
+                    else {
+                        topBun->Render(xpos, yPos, 300, 300);
+
+                    }
                 }
                 else {
-                    topBun->Render(xpos, yPos, 300, 300);
 
-                }
-            }
-            else {
+                    switch (customer->LineUp[i][y]) {
+                    case ingredients::ingredientsType::TOMATO:
 
-                switch (customer->LineUp[i][y]) {
-                case ingredients::ingredientsType::TOMATO:
+                        tomato->Render(xpos, yPos, 300, 300);
 
-                    tomato->Render(xpos, yPos, 300, 300);
+                        break;
+                    case ingredients::ingredientsType::LETTUCE:
+                        lettuce->Render(xpos, yPos, 300, 300);
 
-                    break;
-                case ingredients::ingredientsType::LETTUCE:
-                    lettuce->Render(xpos, yPos, 300, 300);
+                        break;
+                    case ingredients::ingredientsType::CHEESE:
+                        cheese->Render(xpos, yPos, 300, 300);
 
-                    break;
-                case ingredients::ingredientsType::CHEESE:
-                    cheese->Render(xpos, yPos, 300, 300);
+                        break;
+                    case ingredients::ingredientsType::KETCHUP:
+                        ketchup->Render(xpos, yPos, 300, 300);
 
-                    break;
-                case ingredients::ingredientsType::KETCHUP:
-                    ketchup->Render(xpos, yPos, 300, 300);
+                        break;
+                    case ingredients::ingredientsType::COOKEDBURGER:
+                        cookedBurger->Render(xpos, yPos, 300, 300);
 
-                    break;
-                case ingredients::ingredientsType::COOKEDBURGER:
-                    cookedBurger->Render(xpos, yPos, 300, 300);
-
-                    break;
+                        break;
+                    }
                 }
             }
         }
-    }
 
-   
+    
    
 
 }
@@ -204,15 +212,19 @@ void Scene1::custumerLineUp()
 void Scene1::lineUp()
 {
     for (int i = 0; i < level; ++i) {
-        customer->makeRandomOrder();
-        customer->LineUp.push_back(customer->customerOrder);
-        customer->customerLineUp.push_back(customerHappy);
+      
+           
+            customer->makeRandomOrder();
+            customer->LineUp.push_back(customer->customerOrder);
+            customer->customerLineUp.push_back(customerHappy);
+            
 
-        for (int j = 0; j < customer->customerOrder.size(); ++j) {
-            std::cout << ' ' << customer->customerOrder[j];
+            for (int j = 0; j < customer->customerOrder.size(); ++j) {
+                std::cout << ' ' << customer->customerOrder[j];
+            }
+            std::cout << '\n';
         }
-        std::cout << '\n';
-    }
+    
 }
 
 void Scene1::renderText(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y)
