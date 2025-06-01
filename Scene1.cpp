@@ -69,9 +69,19 @@ void Scene1::HandleEvents(SDL_Event& event) {
     }
 }
 
-void Scene1::Update() {
-    
+void Scene1::Update(double deltaTime)
+{
+    if (!timerDone) {
+        timer += deltaTime;
+
+        if (timer >= 30.0) { // 30 seconds
+            timerDone = true;
+            std::cout << "30 seconds have passed!" << std::endl;
+            // You can now trigger whatever event you want here
+        }
+    }
 }
+
 
 void Scene1::Render(SDL_Renderer* renderer) {
    

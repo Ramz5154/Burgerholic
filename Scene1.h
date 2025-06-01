@@ -12,7 +12,7 @@ public:
     ~Scene1();
    
     void HandleEvents(SDL_Event& event) override;
-    void Update() override;
+    void Update(double deltaTime) override;
     void Render(SDL_Renderer* renderer) override;
     void VectorToImage();
     void custumerLineUp();
@@ -21,6 +21,8 @@ public:
     int level = 1;
     int ordersFinished = 0;
 private:
+    double timer = 0.0;
+    bool timerDone = false;
     bool reset = true;
     int customerpos1 = 0;
     int customerpos2 = 300;

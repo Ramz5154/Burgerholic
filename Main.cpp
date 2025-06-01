@@ -7,9 +7,11 @@
 #include "window.h"
 #include "Scene1.h"
 #include <SDL2/SDL_ttf.h>
-
+#include <chrono>
 int SCREEN_WIDTH = 1080;
 int SCREEN_HEIGHT = 720;
+
+auto lastTime = std::chrono::high_resolution_clock::now();
 
 int main(int argc, char* args[]) {
     srand(time(0)); //make it random everytime
@@ -43,7 +45,14 @@ int main(int argc, char* args[]) {
 
     SDL_Event event;
     while (window.gameRunning) {
+
+        auto currentTime = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsedTime = currentTime - lastTime;
+        double deltaTime = elapsedTime.count(); // in seconds
+        lastTime = currentTime;
+
         while (SDL_PollEvent(&event)) {
+
             if (event.type == SDL_QUIT) {
                 window.gameRunning = false;
             }
@@ -53,7 +62,7 @@ int main(int argc, char* args[]) {
         SDL_SetRenderDrawColor(renderer, 169, 169, 169, 255);
         SDL_RenderClear(renderer);
 
-        scene.Update();
+        scene.Update(deltaTime);
         scene.Render(renderer);
 
         SDL_RenderPresent(renderer);
