@@ -49,6 +49,7 @@ void Scene1::HandleEvents(SDL_Event& event) {
                 customer->LineUp.erase(customer->LineUp.begin() + i); 
                 customer->customerLineUp.erase(customer->customerLineUp.begin() + i); 
                 ordersFinished += 1;
+                timer += 8.0;
                 matched = true;
                 break;
             }
@@ -71,13 +72,16 @@ void Scene1::HandleEvents(SDL_Event& event) {
 
 void Scene1::Update(double deltaTime)
 {
+   
+    cookBurger(deltaTime);
+    
     if (!timerDone) {
-        timer += deltaTime;
+        timer -= deltaTime;
 
-        if (timer >= 30.0) { // 30 seconds
+        if (timer < 0.0) { 
             timerDone = true;
             std::cout << "30 seconds have passed!" << std::endl;
-            // You can now trigger whatever event you want here
+          
         }
     }
 }
@@ -88,10 +92,12 @@ void Scene1::Render(SDL_Renderer* renderer) {
     burgerShop->Render(0, 0, 1080, 720);
    
    
-        custumerLineUp();
-        std::string order = std::to_string(ordersFinished);
+     custumerLineUp();
+     int tim = timer;
+     std::string order = std::to_string(ordersFinished);
+     std::string levelTime = std::to_string(tim);
      renderText(renderer, font, order, 250, 40);
-
+     renderTimer(renderer, font, levelTime, 750, 40);
 
 
     if (player.playerOrder.size() > 0 || customer->customerOrder.size() > 0) {
@@ -99,7 +105,7 @@ void Scene1::Render(SDL_Renderer* renderer) {
     }
 }
 
-void Scene1::VectorToImage()
+void Scene1::VectorToImage() //renders the ingriendtes from the vector
 {
     int currentY = player.firstIng;
     
@@ -154,7 +160,7 @@ void Scene1::VectorToImage()
             }
             
     }
-    int currentx = 110;
+   int currentx = 110;
    
 
     for (int i = 0; i < customer->LineUp.size(); ++i) {
@@ -208,7 +214,7 @@ void Scene1::VectorToImage()
 
 }
 
-void Scene1::custumerLineUp()
+void Scene1::custumerLineUp() //renders customer from vector 
 {
     int x = 0;
 
@@ -219,7 +225,7 @@ void Scene1::custumerLineUp()
 }
 
 
-void Scene1::lineUp()
+void Scene1::lineUp() //makes the orders and pushes to vector for customerLineUp() to use
 {
     for (int i = 0; i < level; ++i) {
       
@@ -237,7 +243,23 @@ void Scene1::lineUp()
     
 }
 
-void Scene1::renderText(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y)
+void Scene1::cookBurger(double deltatime)
+{
+    bool raw = false;
+
+    for (int i = 0; i < player.playerOrder.size(); i++) {
+        if (player.playerOrder[i] == ingredients::ingredientsType::RAWBURGER) {
+            std::cout << "hello";
+            raw = true;
+        }
+       
+    }
+    if (!raw) {
+        std::cout << " no raw burger here";
+    }
+}
+
+void Scene1::renderText(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y)//renders text for customers done
 {
     SDL_Color color = { 255, 255, 255 };
     SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
@@ -247,3 +269,15 @@ void Scene1::renderText(SDL_Renderer* renderer, TTF_Font* font, std::string text
     SDL_RenderCopy(renderer, texture, NULL, &dst);
     SDL_DestroyTexture(texture);
 }
+
+void Scene1::renderTimer(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y)//renders timer text
+{
+    SDL_Color color = { 255, 255, 255 };
+    SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_Rect dst = { x, y, surface->w, surface->h };
+    SDL_FreeSurface(surface);
+    SDL_RenderCopy(renderer, texture, NULL, &dst);
+    SDL_DestroyTexture(texture);
+}
+

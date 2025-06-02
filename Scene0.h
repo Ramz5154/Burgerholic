@@ -14,8 +14,7 @@ public:
     void Update(double deltaTime) override;
     void Render(SDL_Renderer* renderer) override;
 
-
-
+  
 
 };
 

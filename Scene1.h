@@ -17,11 +17,13 @@ public:
     void VectorToImage();
     void custumerLineUp();
     void lineUp();
+    void cookBurger(double deltatime);
     void renderText(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y);
+    void renderTimer(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y);
     int level = 1;
     int ordersFinished = 0;
 private:
-    double timer = 0.0;
+    double timer = 30.0;
     bool timerDone = false;
     bool reset = true;
     int customerpos1 = 0;
