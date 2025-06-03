@@ -249,13 +249,21 @@ void Scene1::cookBurger(double deltatime)
 
     for (int i = 0; i < player.playerOrder.size(); i++) {
         if (player.playerOrder[i] == ingredients::ingredientsType::RAWBURGER) {
-            std::cout << "hello";
-            raw = true;
+            if (!timerDone) {
+                cookTimer -= deltatime;
+                if (cookTimer <= 0) {
+                    std::cout << "hello";
+                    player.playerOrder.erase(player.playerOrder.begin() + i);
+                    player.playerOrder.insert(player.playerOrder.begin() + i, ingredients::ingredientsType::COOKEDBURGER);
+                    raw = true;
+                    cookTimer += 3;
+                }
+            }
         }
        
     }
     if (!raw) {
-        std::cout << " no raw burger here";
+        //std::cout << " no raw burger here";
     }
 }
 

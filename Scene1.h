@@ -25,6 +25,8 @@ public:
 private:
     double timer = 30.0;
     bool timerDone = false;
+    double cookTimer = 3.0;
+    bool cookTimerDone = false;
     bool reset = true;
     int customerpos1 = 0;
     int customerpos2 = 300;
