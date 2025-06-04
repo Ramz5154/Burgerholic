@@ -6,6 +6,7 @@
 class Window
 {
 public:
+	
 	bool gameRunning = true;
 	Window();
 	Window(const char* title, int width, int height);

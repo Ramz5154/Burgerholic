@@ -6,12 +6,16 @@
 #include <iostream>
 #include "window.h"
 #include "Scene1.h"
+#include "Scene0.h"
 #include <SDL2/SDL_ttf.h>
 #include <chrono>
 int SCREEN_WIDTH = 1080;
 int SCREEN_HEIGHT = 720;
 
 auto lastTime = std::chrono::high_resolution_clock::now();
+
+Scene* currentScene;
+
 
 int main(int argc, char* args[]) {
     srand(time(0)); //make it random everytime
@@ -39,9 +43,18 @@ int main(int argc, char* args[]) {
         std::cerr << "Renderer could not be created: " << SDL_GetError() << std::endl;
         return -1;
     }
-
+    Scene0 scene(renderer);
     // Create and run the main game scene
-    Scene1 scene(renderer);
+    switch (scene.Scene)
+    {
+    case 0:
+        currentScene = new Scene0(renderer);
+        break;
+    case 1:
+        currentScene = new Scene1(renderer);
+        break;
+    
+    }
 
     SDL_Event event;
     while (window.gameRunning) {
@@ -56,14 +69,14 @@ int main(int argc, char* args[]) {
             if (event.type == SDL_QUIT) {
                 window.gameRunning = false;
             }
-            scene.HandleEvents(event);
+            currentScene->HandleEvents(event);
         }
 
         SDL_SetRenderDrawColor(renderer, 169, 169, 169, 255);
         SDL_RenderClear(renderer);
 
-        scene.Update(deltaTime);
-        scene.Render(renderer);
+        currentScene->Update(deltaTime);
+        currentScene->Render(renderer);
 
         SDL_RenderPresent(renderer);
     }

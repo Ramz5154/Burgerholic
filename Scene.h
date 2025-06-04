@@ -3,6 +3,7 @@
 
 class Scene {
 public:
+    bool status = true;
     virtual ~Scene() {}
     virtual void HandleEvents(SDL_Event& event) = 0;
     virtual  void Update(double deltaTime) = 0;
