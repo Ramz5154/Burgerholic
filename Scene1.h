@@ -5,15 +5,18 @@
 #include "Player.h"
 #include "ingredients.h"
 #include <SDL2/SDL_ttf.h>
+#include "Scene0.h"
 
 class Scene1 : public Scene {
 public:
+
     Scene1(SDL_Renderer* renderer);
     ~Scene1();
    
     void HandleEvents(SDL_Event& event) override;
     void Update(double deltaTime) override;
     void Render(SDL_Renderer* renderer) override;
+    int GetSceneState() override;
     void VectorToImage();
     void custumerLineUp();
     void lineUp();
@@ -31,6 +34,9 @@ private:
     int customerpos1 = 0;
     int customerpos2 = 300;
     int customerpos3 = 600;
+
+    Scene0 scene;
+
     TTF_Font* font;
     ImageRenderer* burgerShop;
     ImageRenderer* topBun;

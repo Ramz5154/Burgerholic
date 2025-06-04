@@ -8,4 +8,5 @@ public:
     virtual void HandleEvents(SDL_Event& event) = 0;
     virtual  void Update(double deltaTime) = 0;
     virtual void Render(SDL_Renderer* renderer) = 0;
+    virtual int GetSceneState() { return -1; }  // -1 = no change
 };

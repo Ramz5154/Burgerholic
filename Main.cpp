@@ -43,35 +43,28 @@ int main(int argc, char* args[]) {
         std::cerr << "Renderer could not be created: " << SDL_GetError() << std::endl;
         return -1;
     }
-    Scene0 scene(renderer);
-    // Create and run the main game scene
-    switch (scene.Scene)
-    {
-    case 0:
-        currentScene = new Scene0(renderer);
-        break;
-    case 1:
-        currentScene = new Scene1(renderer);
-        break;
-    
-    }
+    currentScene = new Scene0(renderer);
 
     SDL_Event event;
-    while (window.gameRunning) {
+    auto lastTime = std::chrono::high_resolution_clock::now();
 
+    while (window.gameRunning) {
+        // Timing
         auto currentTime = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> elapsedTime = currentTime - lastTime;
-        double deltaTime = elapsedTime.count(); // in seconds
+        double deltaTime = elapsedTime.count();
         lastTime = currentTime;
 
+        // Event handling
         while (SDL_PollEvent(&event)) {
-
             if (event.type == SDL_QUIT) {
                 window.gameRunning = false;
             }
+
             currentScene->HandleEvents(event);
         }
 
+        // Logic and rendering
         SDL_SetRenderDrawColor(renderer, 169, 169, 169, 255);
         SDL_RenderClear(renderer);
 
@@ -79,9 +72,29 @@ int main(int argc, char* args[]) {
         currentScene->Render(renderer);
 
         SDL_RenderPresent(renderer);
+
+        // Scene switching
+        int nextScene = currentScene->GetSceneState();
+        switch (nextScene)
+        {
+        case 0:
+            delete currentScene;
+            currentScene = new Scene0(renderer);
+            break;
+        case 1:
+            delete currentScene;
+            currentScene = new Scene1(renderer);
+            break;
+        }
+      
     }
 
+    // Cleanup
+    delete currentScene;
     window.close();
     IMG_Quit();
+    TTF_Quit();
+    SDL_Quit();
+
     return 0;
 }

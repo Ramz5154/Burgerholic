@@ -2,8 +2,10 @@
 #include <iostream>
 #include <SDL2/SDL_ttf.h>
 #include <ctime>
-Scene1::Scene1(SDL_Renderer* renderer) {
+#include "Scene0.h"
 
+Scene1::Scene1(SDL_Renderer* renderer) {
+    
     font = TTF_OpenFont("assets/Pixelon.ttf", 100); //font size
     if (!font) {
         std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
@@ -81,7 +83,7 @@ void Scene1::Update(double deltaTime)
         if (timer < 0.0) { 
             timerDone = true;
             std::cout << "30 seconds have passed!" << std::endl;
-          
+            scene.sceneState = 0;
         }
     }
 }
@@ -104,6 +106,12 @@ void Scene1::Render(SDL_Renderer* renderer) {
         VectorToImage();
     }
 }
+
+int Scene1::GetSceneState()
+{
+    return scene.sceneState;
+}
+
 
 void Scene1::VectorToImage() //renders the ingriendtes from the vector
 {
