@@ -23,7 +23,7 @@ void Customer::makeRandomOrder()
    
     customerOrder.push_back(ingredients::ingredientsType::BUN);
 
-     for (int i = 0; i < 6; ++i) {
+     for (int i = 0; i < burgerSize; ++i) {
         random_index = rand() % enumSize;
     
       

@@ -14,6 +14,7 @@ public:
 	int firstBurger = -100;
 	int secondBurger = 100;
 	int thirdBurger = 300;
+	int burgerSize = 3;
 	int random_index;
 	//std::queue<std::vector<ingredients::ingredientsType>> LineUp;
 	std::vector<std::vector<ingredients::ingredientsType>> LineUp;

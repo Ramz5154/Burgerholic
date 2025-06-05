@@ -73,7 +73,7 @@ void Scene1::HandleEvents(SDL_Event& event) {
                 customer->LineUp.erase(customer->LineUp.begin() + i); 
                 customer->customerLineUp.erase(customer->customerLineUp.begin() + i); 
                 ordersFinished += 1;
-                timer += 8.0;
+                timer += 10.0;
                 matched = true;
                 break;
             }
@@ -86,6 +86,7 @@ void Scene1::HandleEvents(SDL_Event& event) {
 
         if (customer->LineUp.empty() && customer->customerLineUp.empty()) {
             level += 1;
+            customer->burgerSize += 1;
             lineUp();
         }
 
@@ -329,7 +330,6 @@ void Scene1::cookBurger(double deltatime)
             if (!timerDone) {
                 cookTimer -= deltatime;
                 if (cookTimer <= 0) {
-                    std::cout << "hello";
                     player.playerOrder.erase(player.playerOrder.begin() + i);
                     player.playerOrder.insert(player.playerOrder.begin() + i, ingredients::ingredientsType::COOKEDBURGER);
                     raw = true;
