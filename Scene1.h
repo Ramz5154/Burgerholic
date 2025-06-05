@@ -19,6 +19,7 @@ public:
     int GetSceneState() override;
     void VectorToImage();
     void custumerLineUp();
+    void MouseCommand(int mouseX, int mouseY);
     void lineUp();
     void cookBurger(double deltatime);
     void renderText(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y);
@@ -57,6 +58,15 @@ private:
     ImageRenderer* tomatoTin;
     ImageRenderer* plate;
     ImageRenderer* lettuceTin;
+
+    SDL_Rect cheeseT;
+    SDL_Rect bunT;
+    SDL_Rect tomatoT;
+    SDL_Rect burgerT;
+    SDL_Rect lettuceT;
+    SDL_Rect ketchupB;
+   
+
 
     Customer* customer;
     Player player;

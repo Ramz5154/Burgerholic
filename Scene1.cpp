@@ -29,6 +29,14 @@ Scene1::Scene1(SDL_Renderer* renderer) {
     rawBurger = new ImageRenderer(renderer, "assets/rawBurger.png");
     customerHappy = new ImageRenderer(renderer, "assets/customerHappy.png");
     customerAngry = new ImageRenderer(renderer, "assets/customerAngry.png");
+
+    cheeseT = { 95,573,60,62 };
+    tomatoT = { 15,573,60,62 };
+    lettuceT = { 175,573,60,62 };
+    burgerT = { 255,573,60,62 };
+    bunT = { 340,573,60,62 };
+    ketchupB = { 430,565,40,75 };
+
     customer = new Customer();
     
     lineUp();
@@ -47,6 +55,13 @@ void Scene1::HandleEvents(SDL_Event& event) {
     player.PlaceOrder(event);
     if (event.type == SDL_QUIT || player.quit) {
 
+    }
+
+    if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
+        int mouseX = event.button.x;
+        int mouseY = event.button.y;
+
+        MouseCommand(mouseX, mouseY);
     }
 
     if (player.enter) {
@@ -103,6 +118,8 @@ void Scene1::Render(SDL_Renderer* renderer) {
    
      custumerLineUp();
 
+   
+
      plate->Render(475, 450, 300, 300);
      cheeseTin->Render(0, 480, 250, 250);
      tomatoTin->Render(-80, 480, 250, 250);
@@ -110,7 +127,7 @@ void Scene1::Render(SDL_Renderer* renderer) {
      lettuceTin->Render(80, 480, 250, 250);
      burgerTin->Render(160, 480, 250, 250);
      bunTin->Render(240, 480, 250, 250);
-
+   
      int tim = timer;
      std::string order = std::to_string(ordersFinished);
      std::string levelTime = std::to_string(tim);
@@ -247,6 +264,42 @@ void Scene1::custumerLineUp() //renders customer from vector
         customer->customerLineUp[i]->Render(xPos, 160, 400, 400);
     }
 }
+
+void Scene1::MouseCommand(int mouseX, int mouseY)
+{
+    if (mouseX >= tomatoT.x && mouseX <= tomatoT.x + tomatoT.w &&
+        mouseY >= tomatoT.y && mouseY <= tomatoT.y + tomatoT.h) {
+        std::cout << "tomato\n";
+        player.playerOrder.push_back(ingredients::TOMATO);
+    }
+    else if (mouseX >= cheeseT.x && mouseX <= cheeseT.x + cheeseT.w &&
+        mouseY >= cheeseT.y && mouseY <= cheeseT.y + cheeseT.h) {
+        std::cout << "cheese\n";
+        player.playerOrder.push_back(ingredients::CHEESE);
+    }
+    else if (mouseX >= lettuceT.x && mouseX <= lettuceT.x + lettuceT.w &&
+        mouseY >= lettuceT.y && mouseY <= lettuceT.y + lettuceT.h) {
+        std::cout << "lettuce\n";
+        player.playerOrder.push_back(ingredients::LETTUCE);
+    }
+    else if (mouseX >= burgerT.x && mouseX <= burgerT.x + burgerT.w &&
+        mouseY >= burgerT.y && mouseY <= burgerT.y + burgerT.h) {
+        std::cout << "burger\n";
+        player.playerOrder.push_back(ingredients::RAWBURGER);
+    }
+    else if (mouseX >= bunT.x && mouseX <= bunT.x + bunT.w &&
+        mouseY >= bunT.y && mouseY <= bunT.y + bunT.h) {
+        std::cout << "bun\n";
+        player.playerOrder.push_back(ingredients::BUN);
+    }
+    else if (mouseX >= ketchupB.x && mouseX <= ketchupB.x + ketchupB.w &&
+        mouseY >= ketchupB.y && mouseY <= ketchupB.y + ketchupB.h) {
+        std::cout << "ketchup\n";
+        player.playerOrder.push_back(ingredients::KETCHUP);
+    }
+}
+
+
 
 
 void Scene1::lineUp() //makes the orders and pushes to vector for customerLineUp() to use
