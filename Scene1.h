@@ -49,6 +49,15 @@ private:
     ImageRenderer* bottomBun;
     ImageRenderer* customerHappy;
     ImageRenderer* customerAngry;
+
+    ImageRenderer* cheeseTin;
+    ImageRenderer* ketchupBottle;
+    ImageRenderer* burgerTin;
+    ImageRenderer* bunTin;
+    ImageRenderer* tomatoTin;
+    ImageRenderer* plate;
+    ImageRenderer* lettuceTin;
+
     Customer* customer;
     Player player;
     ingredients ing;

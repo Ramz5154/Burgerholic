@@ -11,7 +11,7 @@ class Player
 	
 
 public:
-	int firstIng = 400;
+	int firstIng = 500;
 	bool quit;
 	bool enter;
 	bool cooked = false;

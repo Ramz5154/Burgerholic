@@ -10,6 +10,13 @@ Scene1::Scene1(SDL_Renderer* renderer) {
     if (!font) {
         std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
     }
+    plate = new ImageRenderer(renderer, "assets/plate.png");
+    bunTin = new ImageRenderer(renderer, "assets/bunTin.png");
+    burgerTin = new ImageRenderer(renderer, "assets/burgerTin.png");
+    lettuceTin = new ImageRenderer(renderer, "assets/lettuceTin.png");
+    cheeseTin = new ImageRenderer(renderer, "assets/cheeseTin.png");
+    tomatoTin = new ImageRenderer(renderer, "assets/tomatoTin.png");
+    ketchupBottle = new ImageRenderer(renderer, "assets/ketchupTin.png");
 
     burgerShop = new ImageRenderer(renderer, "assets/burgerStoreCounter.png");
     topBun = new ImageRenderer(renderer, "assets/TopBun.png");
@@ -95,6 +102,15 @@ void Scene1::Render(SDL_Renderer* renderer) {
    
    
      custumerLineUp();
+
+     plate->Render(475, 450, 300, 300);
+     cheeseTin->Render(0, 480, 250, 250);
+     tomatoTin->Render(-80, 480, 250, 250);
+     ketchupBottle->Render(400, 550, 100, 100);
+     lettuceTin->Render(80, 480, 250, 250);
+     burgerTin->Render(160, 480, 250, 250);
+     bunTin->Render(240, 480, 250, 250);
+
      int tim = timer;
      std::string order = std::to_string(ordersFinished);
      std::string levelTime = std::to_string(tim);
@@ -122,15 +138,15 @@ void Scene1::VectorToImage() //renders the ingriendtes from the vector
 
     for (int i = 0; i < player.playerOrder.size(); ++i) {
 
-        int yPos = currentY - (i * 25);
+        int yPos = currentY - (i * 15);
             // Special handling for bun at the first index
             if (player.playerOrder[i] == ingredients::ingredientsType::BUN) {
                 if (i == 0) {
-                    bottomBun->Render(0, yPos, 1080, 720);
+                    bottomBun->Render(370, yPos, 540, 360);
                    
                 }
                 else {
-                    topBun->Render(0, yPos, 1080, 720);
+                    topBun->Render(370, yPos, 540, 360);
                     
                 }
             }
@@ -139,27 +155,27 @@ void Scene1::VectorToImage() //renders the ingriendtes from the vector
                 switch (player.playerOrder[i]) {
                 case ingredients::ingredientsType::TOMATO:
                     
-                    tomato->Render(0, yPos, 1080, 720);
+                    tomato->Render(370, yPos, 540, 360);
                  
                     break;
                 case ingredients::ingredientsType::LETTUCE:
-                    lettuce->Render(0, yPos, 1080, 720);
+                    lettuce->Render(370, yPos, 540, 360);
                    
                     break;
                 case ingredients::ingredientsType::CHEESE:
-                    cheese->Render(0, yPos, 1080, 720);
+                    cheese->Render(370, yPos, 540, 360);
                    
                     break;
                 case ingredients::ingredientsType::KETCHUP:
-                    ketchup->Render(0, yPos, 1080, 720);
+                    ketchup->Render(370, yPos, 540, 360);
                    
                     break;
                 case ingredients::ingredientsType::RAWBURGER:
-                    rawBurger->Render(400, 400, 1080, 720);
+                    rawBurger->Render(700, 500, 540, 360);
                    
                     break;
                 case ingredients::ingredientsType::COOKEDBURGER:
-                    cookedBurger->Render(0, yPos, 1080, 720);
+                    cookedBurger->Render(370, yPos, 540, 360);
                   
                     break;
                

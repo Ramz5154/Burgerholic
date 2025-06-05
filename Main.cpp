@@ -43,7 +43,7 @@ int main(int argc, char* args[]) {
         std::cerr << "Renderer could not be created: " << SDL_GetError() << std::endl;
         return -1;
     }
-    currentScene = new Scene0(renderer);
+    currentScene = new Scene1(renderer);
 
     SDL_Event event;
     auto lastTime = std::chrono::high_resolution_clock::now();
