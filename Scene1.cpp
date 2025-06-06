@@ -29,6 +29,8 @@ Scene1::Scene1(SDL_Renderer* renderer) {
     rawBurger = new ImageRenderer(renderer, "assets/rawBurger.png");
     customerHappy = new ImageRenderer(renderer, "assets/customerHappy.png");
     customerAngry = new ImageRenderer(renderer, "assets/customerAngry.png");
+    bell = new ImageRenderer(renderer, "assets/bell.png");
+    pan = new ImageRenderer(renderer, "assets/pan.png");
 
     cheeseT = { 95,573,60,62 };
     tomatoT = { 15,573,60,62 };
@@ -36,6 +38,7 @@ Scene1::Scene1(SDL_Renderer* renderer) {
     burgerT = { 255,573,60,62 };
     bunT = { 340,573,60,62 };
     ketchupB = { 430,565,40,75 };
+    bellRect = { 777,570,60,65 };
 
     customer = new Customer();
     
@@ -122,6 +125,8 @@ void Scene1::Render(SDL_Renderer* renderer) {
    
 
      plate->Render(475, 450, 300, 300);
+     bell->Render(755, 550, 100, 100);
+     pan->Render(835, 435, 330, 300);
      cheeseTin->Render(0, 480, 250, 250);
      tomatoTin->Render(-80, 480, 250, 250);
      ketchupBottle->Render(400, 550, 100, 100);
@@ -129,6 +134,9 @@ void Scene1::Render(SDL_Renderer* renderer) {
      burgerTin->Render(160, 480, 250, 250);
      bunTin->Render(240, 480, 250, 250);
    
+    // SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    //SDL_RenderFillRect(renderer, &bellRect); // to make the button visable
+
      int tim = timer;
      std::string order = std::to_string(ordersFinished);
      std::string levelTime = std::to_string(tim);
@@ -189,7 +197,7 @@ void Scene1::VectorToImage() //renders the ingriendtes from the vector
                    
                     break;
                 case ingredients::ingredientsType::RAWBURGER:
-                    rawBurger->Render(700, 500, 540, 360);
+                    rawBurger->Render(719, 500, 500, 360);
                    
                     break;
                 case ingredients::ingredientsType::COOKEDBURGER:
@@ -256,15 +264,6 @@ void Scene1::VectorToImage() //renders the ingriendtes from the vector
 
 }
 
-void Scene1::custumerLineUp() //renders customer from vector 
-{
-    int x = 0;
-
-    for (int i = 0; i < customer->customerLineUp.size(); ++i) {
-        int xPos = x + (i * 310);
-        customer->customerLineUp[i]->Render(xPos, 160, 400, 400);
-    }
-}
 
 void Scene1::MouseCommand(int mouseX, int mouseY)
 {
@@ -298,8 +297,22 @@ void Scene1::MouseCommand(int mouseX, int mouseY)
         std::cout << "ketchup\n";
         player.playerOrder.push_back(ingredients::KETCHUP);
     }
+
+    else if (mouseX >= bellRect.x && mouseX <= bellRect.x + bellRect.w &&
+        mouseY >= bellRect.y && mouseY <= bellRect.y + bellRect.h) {
+        player.enter = true;
+    }
 }
 
+void Scene1::custumerLineUp() //renders customer from vector 
+{
+    int x = 0;
+
+    for (int i = 0; i < customer->customerLineUp.size(); ++i) {
+        int xPos = x + (i * 310);
+        customer->customerLineUp[i]->Render(xPos, 160, 400, 400);
+    }
+}
 
 
 

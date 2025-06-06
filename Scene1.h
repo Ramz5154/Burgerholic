@@ -50,6 +50,9 @@ private:
     ImageRenderer* bottomBun;
     ImageRenderer* customerHappy;
     ImageRenderer* customerAngry;
+    ImageRenderer* bell;
+    ImageRenderer* pan;
+
 
     ImageRenderer* cheeseTin;
     ImageRenderer* ketchupBottle;
@@ -65,6 +68,7 @@ private:
     SDL_Rect burgerT;
     SDL_Rect lettuceT;
     SDL_Rect ketchupB;
+    SDL_Rect bellRect;
    
 
 
