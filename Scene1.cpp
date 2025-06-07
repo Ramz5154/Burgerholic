@@ -39,6 +39,7 @@ Scene1::Scene1(SDL_Renderer* renderer) {
     bunT = { 340,573,60,62 };
     ketchupB = { 430,565,40,75 };
     bellRect = { 777,570,60,65 };
+    panRect = { 880,560,170,85 };
 
     customer = new Customer();
     
@@ -135,7 +136,7 @@ void Scene1::Render(SDL_Renderer* renderer) {
      bunTin->Render(240, 480, 250, 250);
    
     // SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    //SDL_RenderFillRect(renderer, &bellRect); // to make the button visable
+    //SDL_RenderFillRect(renderer, &panRect); // to make the button visable
 
      int tim = timer;
      std::string order = std::to_string(ordersFinished);
@@ -176,6 +177,8 @@ void Scene1::VectorToImage() //renders the ingriendtes from the vector
                     
                 }
             }
+          
+
             else {
 
                 switch (player.playerOrder[i]) {
@@ -302,6 +305,12 @@ void Scene1::MouseCommand(int mouseX, int mouseY)
         mouseY >= bellRect.y && mouseY <= bellRect.y + bellRect.h) {
         player.enter = true;
     }
+
+    else if (mouseX >= panRect.x && mouseX <= panRect.x + panRect.w &&
+        mouseY >= panRect.y && mouseY <= panRect.y + panRect.h) {
+        panPressed = true;
+       
+    }
 }
 
 void Scene1::custumerLineUp() //renders customer from vector 
@@ -336,25 +345,30 @@ void Scene1::lineUp() //makes the orders and pushes to vector for customerLineUp
 
 void Scene1::cookBurger(double deltatime)
 {
-    bool raw = false;
+   
 
     for (int i = 0; i < player.playerOrder.size(); i++) {
         if (player.playerOrder[i] == ingredients::ingredientsType::RAWBURGER) {
             if (!timerDone) {
                 cookTimer -= deltatime;
-                if (cookTimer <= 0) {
-                    player.playerOrder.erase(player.playerOrder.begin() + i);
-                    player.playerOrder.insert(player.playerOrder.begin() + i, ingredients::ingredientsType::COOKEDBURGER);
-                    raw = true;
-                    cookTimer += 3;
+                if (panPressed) {
+                    if (cookTimer <= 0) {
+                        burgerCooked = true;
+                        player.playerOrder.erase(player.playerOrder.begin() + i);
+                        player.playerOrder.push_back(ingredients::ingredientsType::COOKEDBURGER);
+                        
+                        cookTimer += 3;
+                        
+                        panPressed = false;
+                    }
                 }
+                burgerCooked = false;
             }
+           
         }
        
     }
-    if (!raw) {
-        //std::cout << " no raw burger here";
-    }
+   
 }
 
 void Scene1::renderText(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y)//renders text for customers done

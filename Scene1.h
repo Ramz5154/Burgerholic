@@ -27,6 +27,8 @@ public:
     int level = 1;
     int ordersFinished = 0;
 private:
+    bool burgerCooked = false;
+    bool panPressed = false;
     double timer = 30.0;
     bool timerDone = false;
     double cookTimer = 3.0;
@@ -69,6 +71,7 @@ private:
     SDL_Rect lettuceT;
     SDL_Rect ketchupB;
     SDL_Rect bellRect;
+    SDL_Rect panRect;
    
 
 
