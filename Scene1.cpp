@@ -4,6 +4,10 @@
 #include <ctime>
 #include "Scene0.h"
 
+Scene1::Scene1()
+{
+}
+
 Scene1::Scene1(SDL_Renderer* renderer) {
     
     font = TTF_OpenFont("assets/Pixelon.ttf", 100); //font size
@@ -110,7 +114,7 @@ void Scene1::Update(double deltaTime)
         if (timer < 0.0) { 
             timerDone = true;
             std::cout << "30 seconds have passed!" << std::endl;
-            scene.sceneState = 0;
+            scene.sceneState = 2;
         }
     }
 }
@@ -142,7 +146,7 @@ void Scene1::Render(SDL_Renderer* renderer) {
      std::string order = std::to_string(ordersFinished);
      std::string levelTime = std::to_string(tim);
      renderText(renderer, font, order, 250, 40);
-     renderTimer(renderer, font, levelTime, 750, 40);
+     renderText(renderer, font, levelTime, 750, 40);
 
 
     if (player.playerOrder.size() > 0 || customer->customerOrder.size() > 0) {
@@ -308,7 +312,7 @@ void Scene1::MouseCommand(int mouseX, int mouseY)
 
     else if (mouseX >= panRect.x && mouseX <= panRect.x + panRect.w &&
         mouseY >= panRect.y && mouseY <= panRect.y + panRect.h) {
-        panPressed = true;
+       
        
     }
 }
@@ -351,7 +355,7 @@ void Scene1::cookBurger(double deltatime)
         if (player.playerOrder[i] == ingredients::ingredientsType::RAWBURGER) {
             if (!timerDone) {
                 cookTimer -= deltatime;
-                if (panPressed) {
+  
                     if (cookTimer <= 0) {
                         burgerCooked = true;
                         player.playerOrder.erase(player.playerOrder.begin() + i);
@@ -359,10 +363,10 @@ void Scene1::cookBurger(double deltatime)
                         
                         cookTimer += 3;
                         
-                        panPressed = false;
+                       
                     }
-                }
-                burgerCooked = false;
+                
+                
             }
            
         }
@@ -372,17 +376,6 @@ void Scene1::cookBurger(double deltatime)
 }
 
 void Scene1::renderText(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y)//renders text for customers done
-{
-    SDL_Color color = { 255, 255, 255 };
-    SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-    SDL_Rect dst = { x, y, surface->w, surface->h };
-    SDL_FreeSurface(surface);
-    SDL_RenderCopy(renderer, texture, NULL, &dst);
-    SDL_DestroyTexture(texture);
-}
-
-void Scene1::renderTimer(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y)//renders timer text
 {
     SDL_Color color = { 255, 255, 255 };
     SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), color);

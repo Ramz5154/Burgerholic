@@ -7,6 +7,7 @@
 #include "window.h"
 #include "Scene1.h"
 #include "Scene0.h"
+#include "Scene3.h"
 #include <SDL2/SDL_ttf.h>
 #include <chrono>
 int SCREEN_WIDTH = 1080;
@@ -43,7 +44,7 @@ int main(int argc, char* args[]) {
         std::cerr << "Renderer could not be created: " << SDL_GetError() << std::endl;
         return -1;
     }
-    currentScene = new Scene1(renderer);
+    currentScene = new Scene0(renderer);
 
     SDL_Event event;
     auto lastTime = std::chrono::high_resolution_clock::now();
@@ -84,6 +85,10 @@ int main(int argc, char* args[]) {
         case 1:
             delete currentScene;
             currentScene = new Scene1(renderer);
+            break;
+        case 2:
+            delete currentScene;
+            currentScene = new Scene3(renderer);
             break;
         }
       

@@ -9,7 +9,7 @@
 
 class Scene1 : public Scene {
 public:
-
+    Scene1();
     Scene1(SDL_Renderer* renderer);
     ~Scene1();
    
@@ -23,13 +23,13 @@ public:
     void lineUp();
     void cookBurger(double deltatime);
     void renderText(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y);
-    void renderTimer(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y);
+    int GetLevel() { return level;};
     int level = 1;
     int ordersFinished = 0;
 private:
     bool burgerCooked = false;
     bool panPressed = false;
-    double timer = 30.0;
+    double timer = 10.0;
     bool timerDone = false;
     double cookTimer = 3.0;
     bool cookTimerDone = false;
