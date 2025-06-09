@@ -13,7 +13,7 @@
 int SCREEN_WIDTH = 1080;
 int SCREEN_HEIGHT = 720;
 
-auto lastTime = std::chrono::high_resolution_clock::now();
+
 
 Scene* currentScene;
 
@@ -87,9 +87,20 @@ int main(int argc, char* args[]) {
             currentScene = new Scene1(renderer);
             break;
         case 2:
+        {
+            Scene1* scene1 = dynamic_cast<Scene1*>(currentScene);
+            int finalLevel = 1;
+            int finalScore = 0;
+
+            if (scene1) {
+                finalLevel = scene1->GetLevel();
+                finalScore = scene1->GetScore();
+            }
+
             delete currentScene;
-            currentScene = new Scene3(renderer);
+            currentScene = new Scene3(renderer, finalLevel, finalScore);
             break;
+        }
         }
       
     }

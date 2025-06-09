@@ -17,7 +17,9 @@ class Scene3 : public Scene {
     void renderText(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y);
 public:
  Scene3();
-    Scene3(SDL_Renderer* renderer);
+ int level;
+ int score;
+    Scene3(SDL_Renderer* renderer, int finalLevel, int finalScore);
 
     ~Scene3();
     void HandleEvents(SDL_Event& event) override;

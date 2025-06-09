@@ -9,14 +9,18 @@ Scene3::Scene3()
 {
 }
 
-Scene3::Scene3(SDL_Renderer* renderer) {
-	font = TTF_OpenFont("assets/Pixelon.ttf", 100); //font size
+
+
+Scene3::Scene3(SDL_Renderer* renderer, int finalLevel, int finalScore)
+	: level(finalLevel), score(finalScore)
+{
+	font = TTF_OpenFont("assets/Pixelon.ttf", 100);
 	if (!font) {
 		std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
 	}
 	scoreBoard = new ImageRenderer(renderer, "assets/scoreBoard.png");
-
 }
+
 
 Scene3::~Scene3()
 {
@@ -34,12 +38,13 @@ void Scene3::Render(SDL_Renderer* renderer)
 {
 	scoreBoard->Render(0, 0, 1080, 720);
 
-	std::string Level = std::to_string(scene1.GetLevel());
-	std::string Score = std::to_string(scene1.ordersFinished) + Level;
+	std::string LevelStr = "Level: " + std::to_string(level);
+	std::string ScoreStr = "Score: " + std::to_string(score);
 
-	renderText(renderer, font, Level, 250, 40);
-	
+	renderText(renderer, font, LevelStr, 250, 40);
+	renderText(renderer, font, ScoreStr, 250, 140);
 }
+
 
 int Scene3::GetSceneState()
 {

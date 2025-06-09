@@ -24,6 +24,7 @@ public:
     void cookBurger(double deltatime);
     void renderText(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y);
     int GetLevel() { return level;};
+    int GetScore() { return ordersFinished; };
     int level = 1;
     int ordersFinished = 0;
 private:
