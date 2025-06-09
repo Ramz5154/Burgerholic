@@ -141,6 +141,7 @@
     <ClInclude Include="Customer.h" />
     <ClInclude Include="ImageRenderer.h" />
     <ClInclude Include="ingredients.h" />
+    <ClInclude Include="Memory.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene0.h" />
