@@ -108,7 +108,7 @@ int main(int argc, char* args[]) {
 
     // Cleanup
     delete currentScene;
-   /* PrintSummary();*/
+    //PrintSummary();
     window.close();
     IMG_Quit();
     TTF_Quit();

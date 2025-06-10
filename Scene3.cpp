@@ -24,6 +24,7 @@ Scene3::Scene3(SDL_Renderer* renderer, int finalLevel, int finalScore)
 
 Scene3::~Scene3()
 {
+	delete scoreBoard;
 }
 
 void Scene3::HandleEvents(SDL_Event& event)

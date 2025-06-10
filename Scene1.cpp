@@ -55,8 +55,26 @@ Scene1::~Scene1() {
     delete burgerShop;
     delete customer;
 
-   
+    delete plate;
+    delete bunTin;
+    delete cheeseTin;
+    delete tomatoTin;
+    delete lettuceTin;
+    delete burgerTin;
+    delete ketchupBottle;
 
+    delete topBun;
+    delete lettuce;
+    delete tomato;
+    delete ketchup;
+    delete cheese;
+    delete cookedBurger;
+    delete rawBurger;
+    delete customerHappy;
+    delete customerAngry;
+    delete bottomBun;
+    delete bell;
+    delete pan;
 }
 
 void Scene1::HandleEvents(SDL_Event& event) {

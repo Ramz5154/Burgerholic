@@ -16,6 +16,7 @@ Scene0::Scene0(SDL_Renderer* renderer)
 
 Scene0::~Scene0()
 {
+    delete mainMenu;
 }
 
 void Scene0::HandleEvents(SDL_Event& event)
