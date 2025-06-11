@@ -1,7 +1,7 @@
 #include "window.h"
 
-
-
+//https://medium.com/nerd-for-tech/creating-a-window-using-sdl2-0bcca0f6e449
+//HOW TO MAKE A WINDOW 
 
 
 Window::Window(const char* title, int width, int height)

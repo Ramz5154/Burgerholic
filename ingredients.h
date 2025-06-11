@@ -6,7 +6,8 @@ class ingredients {
 public:
 	enum ingredientsType
 	{
-		
+		//ENUM FOR THE INGRIDENTS 
+		//THESE ARE THE VALUES STORED IN THE PLAYER AND CUSTOMERS ORDER VECTORS
 		BUN,
 		RAWBURGER,
 		LETTUCE,

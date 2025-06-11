@@ -5,8 +5,9 @@
 #include "ingredients.h"
 #include "Scene1.h"
 
-bool Player::PlaceOrder(SDL_Event& event)
-{
+bool Player::PlaceOrder(SDL_Event& event) // BY KEY PRESS WILL ADD INBGRIEDNET TO THE VECTOR 
+//CREATE THE PLAYERS ORDER
+{                                           
     
     bool isRunning = true;
    
@@ -15,7 +16,7 @@ bool Player::PlaceOrder(SDL_Event& event)
       switch (event.key.keysym.sym) {
         case SDLK_e:
      printf("BUN ");
-     playerOrder.push_back(ingredients::ingredientsType::BUN);
+     playerOrder.push_back(ingredients::ingredientsType::BUN); //PUSHES INGREDIENT INTO VECTOR
         break;
         case SDLK_b:
          
@@ -44,10 +45,10 @@ bool Player::PlaceOrder(SDL_Event& event)
           quit = true;
        break;
       case SDLK_RETURN:
-          enter = true;
+          enter = true; // IF YOU PRESS ENTER YOU WILL SUBMIT THE ORDER TO ME COMPARED TO THE CUSTOMERS ORDER
           break;
       default:
-          printf("you pressed an invalid key");
+          printf("you pressed an invalid key"); // PRESS ANYTHING ELSE AND WILL PRINT INVALID
         }
      }          
     
@@ -58,7 +59,7 @@ bool Player::PlaceOrder(SDL_Event& event)
 
 std::vector<ingredients::ingredientsType> Player::getPlayersOrder() const
 {
-    return playerOrder;
+    return playerOrder; // JUST GETS THE PLAYERS ORDER
 }
 
 

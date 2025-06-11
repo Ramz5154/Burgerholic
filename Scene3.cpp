@@ -12,9 +12,9 @@ Scene3::Scene3()
 
 
 Scene3::Scene3(SDL_Renderer* renderer, int finalLevel, int finalScore)
-	: level(finalLevel), score(finalScore)
+	: level(finalLevel), score(finalScore)//IMPLEMENTED IN MAIN TO GET THE SCORE AND LEVEL FROM SCENE 1
 {
-	font = TTF_OpenFont("assets/Pixelon.ttf", 50);
+	font = TTF_OpenFont("assets/Pixelon.ttf", 50);//FONT
 	if (!font) {
 		std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
 	}
@@ -43,7 +43,7 @@ void Scene3::Render(SDL_Renderer* renderer)
 	std::string ScoreStr = "Score: " + std::to_string(score);
 
 	renderText(renderer, font, LevelStr, 250, 200);
-	//renderText(renderer, font, ScoreStr, 250, 140);
+	
 }
 
 

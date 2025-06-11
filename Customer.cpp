@@ -13,21 +13,21 @@ Customer::~Customer()
 
 std::vector<ingredients::ingredientsType> Customer::getCustomersOrder() const
 {
-    return customerOrder;
+    return customerOrder;//RETURNS ORDER
 }
 
 void Customer::makeRandomOrder()
 {
   
-    customerOrder.clear();
+    customerOrder.clear();// ERASES THE LAST ORDER OR THEY WILL STACK ON TOP OF EACH OTHER
    
-    customerOrder.push_back(ingredients::ingredientsType::BUN);
+    customerOrder.push_back(ingredients::ingredientsType::BUN);//PUSHES FIRST BUN
 
-     for (int i = 0; i < burgerSize; ++i) {
-        random_index = rand() % enumSize;
+     for (int i = 0; i < burgerSize; ++i) {//SIZE OF BURGER BURGERSIZE WILL GROW WITH LEVEL TO MAKE DIFFCULT
+        random_index = rand() % enumSize;// RANDOM INGRIDNETGS 
     
       
-            switch (random_index) {
+            switch (random_index) {//MAKES BURGER AND PUSHES TO VECTOR
             case 1:
                 customerOrder.push_back(ingredients::ingredientsType::COOKEDBURGER);
                 break;
@@ -47,6 +47,6 @@ void Customer::makeRandomOrder()
 
         }
 
-     customerOrder.push_back(ingredients::ingredientsType::BUN);
+     customerOrder.push_back(ingredients::ingredientsType::BUN);//LAST BUN TO CLOSE
 
 }

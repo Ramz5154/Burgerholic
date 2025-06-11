@@ -14,6 +14,8 @@ Scene1::Scene1(SDL_Renderer* renderer) {
     if (!font) {
         std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
     }
+    //ADDS TO HEAP BECAUSE IMAGES ARE TOO BIG MIGHT CAUSE STACK OVERFLOW
+    //AND NEEED LONGER LIFETIME
     plate = new ImageRenderer(renderer, "assets/plate.png");
     bunTin = new ImageRenderer(renderer, "assets/bunTin.png");
     burgerTin = new ImageRenderer(renderer, "assets/burgerTin.png");
@@ -45,13 +47,16 @@ Scene1::Scene1(SDL_Renderer* renderer) {
     bellRect = { 777,570,60,65 };
     panRect = { 880,560,170,85 };
 
-    customer = new Customer();
     
-    lineUp();
+    customer = new Customer();// NEEDS LIFETIME
+    
+    lineUp();// WITHOUT THIS IT WONT PUT OUT THE FIRST CUSTOMER 
    
 }
 
 Scene1::~Scene1() {
+    //CLEAN HEAP 
+    //COULD ITERATE THROUGH IMAGES BETTER PREFORMANCE 
     delete burgerShop;
     delete customer;
 
@@ -80,11 +85,13 @@ Scene1::~Scene1() {
 void Scene1::HandleEvents(SDL_Event& event) {
     player.PlaceOrder(event);
     if (event.type == SDL_QUIT || player.quit) {
-
+        event.type = SDL_QUIT;// PRESS ESC TO QUIT
+        SDL_PushEvent(&event);
     }
 
     if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
-        int mouseX = event.button.x;
+        int mouseX = event.button.x;///WHEN LEFT CLICK GETS X AND Y OF MOUSE AND SEES IF ITS INSIDE THE X OR Y OF A RECT
+        // AND THE HIEGHT AND WIDTH 
         int mouseY = event.button.y;
 
         MouseCommand(mouseX, mouseY);
@@ -93,10 +100,10 @@ void Scene1::HandleEvents(SDL_Event& event) {
     if (player.enter) {
         bool matched = false;
 
-        for (int i = 0; i < customer->LineUp.size(); ++i) {
-            if (ing.ingredientsMatch(customer->LineUp[i], player.playerOrder)) {
+        for (int i = 0; i < customer->LineUp.size(); ++i) {// IF THERE IS ANYTHING IN VECTOR 
+            if (ing.ingredientsMatch(customer->LineUp[i], player.playerOrder)) {//COMPARES VECTORS
                 std::cout << "orders match\n";
-                customer->LineUp.erase(customer->LineUp.begin() + i); 
+                customer->LineUp.erase(customer->LineUp.begin() + i); // ERASES VECTOR AND CUSTOMER
                 customer->customerLineUp.erase(customer->customerLineUp.begin() + i); 
                 ordersFinished += 1;
                 timer += 10.0;
@@ -110,14 +117,14 @@ void Scene1::HandleEvents(SDL_Event& event) {
             std::cout << "orders don't match\n";
         }
 
-        if (customer->LineUp.empty() && customer->customerLineUp.empty()) {
+        if (customer->LineUp.empty() && customer->customerLineUp.empty()) {//IF NO MORE ORDERS LEVEL UP AND ADD MORE CUSTOMERS
             level += 1;
-            customer->burgerSize += 1;
-            lineUp();
+            customer->burgerSize += 1;// ADD TO THE NUMBERS OF INGRIDNETS ABLE TO BE ADDED TO THE VECTOR CHECK CUSTOMER.CPP
+            lineUp();//RUNS LINE
         }
 
-        player.playerOrder.clear();
-        player.enter = false;
+        player.playerOrder.clear();// ERASES PLAYER IF CORRECT OR NOT
+        player.enter = false;//RESETS SO YOU CAN PRESS ENTER AGIN
     }
 }
 
@@ -129,10 +136,10 @@ void Scene1::Update(double deltaTime)
     if (!timerDone) {
         timer -= deltaTime;
 
-        if (timer < 0.0) { 
+        if (timer < 0.0) { // IF TIMER HITS 0 IT WILL CHANGE TO SCENE 3
             timerDone = true;
             std::cout << "30 seconds have passed!" << std::endl;
-            scene.sceneState = 2;
+            scene.sceneState = 2; //SWITCH USED IN MAIN 2 = SCENE 3
         }
     }
 }
@@ -146,7 +153,7 @@ void Scene1::Render(SDL_Renderer* renderer) {
      custumerLineUp();
 
    
-
+     //RENDERS IMAGES THAT WILL ALWAYS BE NEEDED IN SCENE 1 
      plate->Render(475, 450, 300, 300);
      bell->Render(755, 550, 100, 100);
      pan->Render(835, 435, 330, 300);
@@ -161,37 +168,37 @@ void Scene1::Render(SDL_Renderer* renderer) {
     //SDL_RenderFillRect(renderer, &panRect); // to make the button visable
 
      int tim = timer;
-     std::string order = std::to_string(ordersFinished);
+     std::string order = std::to_string(ordersFinished);// COVERTING TO STRING TO BE USED TO RENDER TEXT
      std::string levelTime = std::to_string(tim);
-     renderText(renderer, font, order, 250, 40);
+     renderText(renderer, font, order, 250, 40);//RENDERS TEXT
      renderText(renderer, font, levelTime, 750, 40);
 
 
-    if (player.playerOrder.size() > 0 || customer->customerOrder.size() > 0) {
+    if (player.playerOrder.size() > 0 || customer->customerOrder.size() > 0) {//ONLY RUNS IF THERE IS SOMETHING INSIDE THE VECTOR COUL OF USED !EMPTY()
         VectorToImage();
     }
 }
 
 int Scene1::GetSceneState()
 {
-    return scene.sceneState;
+    return scene.sceneState;//GETS SCEMR FOR SWITCHING NEED FOR ALL SCENES
 }
 
 
 void Scene1::VectorToImage() //renders the ingriendtes from the vector
 {
-    int currentY = player.firstIng;
+    int currentY = player.firstIng;// FIRST X POS OR JUST USE 500 
     
   
    
 
     for (int i = 0; i < player.playerOrder.size(); ++i) {
 
-        int yPos = currentY - (i * 15);
+        int yPos = currentY - (i * 15);// SEPERATION BETWEEN THE INGRIDNETS FOR THE Y AXIS 
             // Special handling for bun at the first index
             if (player.playerOrder[i] == ingredients::ingredientsType::BUN) {
                 if (i == 0) {
-                    bottomBun->Render(370, yPos, 540, 360);
+                    bottomBun->Render(370, yPos, 540, 360);//IF THE FIRST INDEX IS A BUN THAN IT WILL RENDER THE BOTTOM BUN IF NOT TOP BUN
                    
                 }
                 else {
@@ -239,10 +246,10 @@ void Scene1::VectorToImage() //renders the ingriendtes from the vector
    
 
     for (int i = 0; i < customer->LineUp.size(); ++i) {
-        int xpos = currentx + (i * 320);
+        int xpos = currentx + (i * 320);// SEPRATING THE BURGERS SO IT FITS INTO THE CUSTOMERS ORDER BUBBLE
         for (int y = 0; y < customer->LineUp[i].size(); ++y)
         {
-            int yPos = 220 - (y * 13);
+            int yPos = 220 - (y * 13);//SEPRATES ENOUGH TO SHOW THE BURGER CLEARLY
             // Special handling for bun at the first index
            
                 if (customer->LineUp[i][y] == ingredients::ingredientsType::BUN) {
@@ -257,7 +264,7 @@ void Scene1::VectorToImage() //renders the ingriendtes from the vector
                 }
                 else {
 
-                    switch (customer->LineUp[i][y]) {
+                    switch (customer->LineUp[i][y]) {// A VECTOR OF VECTOR IS USED FOR EACH INGRIDNET OF EACH CUSTOMER
                     case ingredients::ingredientsType::TOMATO:
 
                         tomato->Render(xpos, yPos, 300, 300);
@@ -290,7 +297,7 @@ void Scene1::VectorToImage() //renders the ingriendtes from the vector
 }
 
 
-void Scene1::MouseCommand(int mouseX, int mouseY)
+void Scene1::MouseCommand(int mouseX, int mouseY)// USED IN HANDLE EVNETS TO SEE IF THE MOUSE CORDS MEET THE CORDS OF EACH OF THE BUTTONS 
 {
     if (mouseX >= tomatoT.x && mouseX <= tomatoT.x + tomatoT.w &&
         mouseY >= tomatoT.y && mouseY <= tomatoT.y + tomatoT.h) {
@@ -370,16 +377,16 @@ void Scene1::cookBurger(double deltatime)
    
 
     for (int i = 0; i < player.playerOrder.size(); i++) {
-        if (player.playerOrder[i] == ingredients::ingredientsType::RAWBURGER) {
-            if (!timerDone) {
-                cookTimer -= deltatime;
-  
-                    if (cookTimer <= 0) {
+        if (player.playerOrder[i] == ingredients::ingredientsType::RAWBURGER) {// IF THERE IS A RAWBURGER IN THE VECTOR THIS WILL RUN
+            if (!timerDone) {//IF THE MAIN TIMER IS STILL COUNTING DOWN IT WILL RUN
+                cookTimer -= deltatime;// COOK TIMER IS HOW LONG THE BURGER TAKES TO COOK IT
+                        //DELTATIME IS 0.016 AND IS COUNTING DOWN EVERY TICK 
+                    if (cookTimer <= 0) {//WHEN ITS DONE COOKING
                         burgerCooked = true;
-                        player.playerOrder.erase(player.playerOrder.begin() + i);
+                        player.playerOrder.erase(player.playerOrder.begin() + i);//IT WILL ERASE THE RAW BURGER AND ADD THE COOKED
                         player.playerOrder.push_back(ingredients::ingredientsType::COOKEDBURGER);
                         
-                        cookTimer += 3;
+                        cookTimer += 3;// RESET THE TIMER FOR THE NEXT RAW BURGER
                         
                        
                     }

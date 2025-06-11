@@ -30,9 +30,9 @@ public:
 private:
     bool burgerCooked = false;
     bool panPressed = false;
-    double timer = 10.0;
+    double timer = 15.0;// GAME TIMER 
     bool timerDone = false;
-    double cookTimer = 3.0;
+    double cookTimer = 3.0;//HOW LONG BURGERS TAKE TO COOK
     bool cookTimerDone = false;
     bool reset = true;
     int customerpos1 = 0;
@@ -64,7 +64,7 @@ private:
     ImageRenderer* tomatoTin;
     ImageRenderer* plate;
     ImageRenderer* lettuceTin;
-
+    //RECTS USED FOR BUTTONS
     SDL_Rect cheeseT;
     SDL_Rect bunT;
     SDL_Rect tomatoT;

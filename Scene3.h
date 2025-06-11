@@ -17,8 +17,8 @@ class Scene3 : public Scene {
     void renderText(SDL_Renderer* renderer, TTF_Font* font, std::string text, int x, int y);
 public:
  Scene3();
- int level;
- int score;
+ int level; //LEVEL = LEVEL FROM SCENE1
+ int score;//SAME AS LEVEL
     Scene3(SDL_Renderer* renderer, int finalLevel, int finalScore);
 
     ~Scene3();

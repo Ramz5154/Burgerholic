@@ -4,6 +4,10 @@
 //#include <iostream>
 //#include <memory>
 //#include <atomic>
+// 
+// 
+// UNVOMMENT TO SEE ALL MEMORY LEAKS 
+// 
 //
 //// Thread-safe counters for memory tracking
 //namespace MemoryMonitor {

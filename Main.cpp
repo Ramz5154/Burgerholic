@@ -20,7 +20,7 @@ Scene* currentScene;
 
 int main(int argc, char* args[]) {
     srand(time(0)); //make it random everytime
-
+    //DEBUG
     if (TTF_Init() == -1) {
         std::cerr << "SDL_ttf could not initialize! Error: " << TTF_GetError() << std::endl;
         return -1;
@@ -45,7 +45,7 @@ int main(int argc, char* args[]) {
         return -1;
     }
     //currentScene = new Scene3(renderer, NULL, NULL);
-    currentScene = new Scene0(renderer);
+    currentScene = new Scene0(renderer);//STARTING SCENE
 
     SDL_Event event;
     auto lastTime = std::chrono::high_resolution_clock::now();
@@ -58,7 +58,7 @@ int main(int argc, char* args[]) {
         lastTime = currentTime;
 
         // Event handling
-        while (SDL_PollEvent(&event)) {
+        while (SDL_PollEvent(&event)) {//MAIN GAME LOOP
             if (event.type == SDL_QUIT) {
                 window.gameRunning = false;
             }
@@ -70,8 +70,8 @@ int main(int argc, char* args[]) {
         SDL_SetRenderDrawColor(renderer, 169, 169, 169, 255);
         SDL_RenderClear(renderer);
 
-        currentScene->Update(deltaTime);
-        currentScene->Render(renderer);
+        currentScene->Update(deltaTime);//UPDATE FOR CURRENT SCENE
+        currentScene->Render(renderer);//RENDER 
 
         SDL_RenderPresent(renderer);
 
@@ -108,11 +108,11 @@ int main(int argc, char* args[]) {
 
     // Cleanup
     delete currentScene;
-    //PrintSummary();
+    //PrintSummary(); //UNCOMMENT FOR MEMORY SUMMARY ALSO UNCOMMENT MEMORY.H
     window.close();
     IMG_Quit();
     TTF_Quit();
     SDL_Quit();
-
+    //CLEAN UP
     return 0;
 }

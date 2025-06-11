@@ -6,13 +6,13 @@
 
 class Scene0 : public Scene
 {   
-    ImageRenderer* mainMenu;
-    SDL_Rect quit;
-    SDL_Rect start;
+    ImageRenderer* mainMenu; //IMAGE
+    SDL_Rect quit;//QUIT BUTTON
+    SDL_Rect start;// START BUTTON
    
 public:
     int Scene = 0;
-    int sceneState = -1;
+    int sceneState = -1;//EVERY SCENE HAS THIS FOR SCENE SWITCHIBNG -1 = NO CHANGE
     Scene0();
     Scene0(SDL_Renderer* renderer);
     ~Scene0();
